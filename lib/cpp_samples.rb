@@ -58,7 +58,7 @@ module CppSamples
 		description_start = sample_contents.length - description.length
 		code = strip_blank_lines(sample_contents[1..description_start-1])
 
-		Sample.new(title, code, description)
+		Sample.new(title, code.join, description.join)
 	end
 
 	def self.extract_title(lines)

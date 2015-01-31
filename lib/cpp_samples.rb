@@ -15,7 +15,7 @@ module CppSamples
 		sections = build_dir(samples_dir)
 
 		sections.inject({}) do |tree, section|
-      categories = build_dir(section.path)
+			categories = build_dir(section.path)
 
 			tree[section] = categories.inject({}) do |tree_section, category|
 				tree_section[category] = []

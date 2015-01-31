@@ -4,9 +4,10 @@ require 'cpp_samples/version'
 
 module CppSamples
 	Section = Struct.new(:path, :title)
-	Sample = Struct.new(:title, :code)
+	Sample = Struct.new(:title, :code, :description)
 
 	SAMPLES_DIR = './samples'
+	COMMENT_REGEX = /^\/\/\s*(.+)$/
 
 	def self.generate
 		pp build_samples_tree(SAMPLES_DIR)
@@ -43,24 +44,45 @@ module CppSamples
 	def self.collect_samples(dir)
 		sample_file_names = Dir.glob("#{dir}/*.cpp")
 		sample_file_names.inject([]) do |samples, sample_file_name|
-			samples << extract_sample(sample_file_name)
+			samples << read_sample(sample_file_name)
 		end
 	end
 
-	def self.extract_sample(sample_file_name)
+	def self.read_sample(sample_file_name)
 		sample_file = File.new(sample_file_name, 'r')
 
-		header = sample_file.readline
-		header_match = /^\/\/\s*(.+)/.match(header)
+		sample_contents = strip_blank_lines(sample_file.readlines)
+
+		title = extract_title(sample_contents)
+		description = extract_description(sample_contents)
+		description_start = sample_contents.length - description.length
+		code = strip_blank_lines(sample_contents[1..description_start-1])
+
+		Sample.new(title, code, description)
+	end
+
+	def self.extract_title(lines)
+		header = lines[0]
+		header_match = COMMENT_REGEX.match(header)
 
 		unless header_match
 			raise "invalid header line in sample file: #{sample_file_name}"
 		end
 
-		title = header_match[1]
+		header_match[1]
+	end
 
-		code = sample_file.readlines.join().strip + "\n"
+	def self.extract_description(lines)
+		description = []
+		line_index = lines.length - 1
+		while match = COMMENT_REGEX.match(lines[line_index])
+			description.unshift(match[1])
+			line_index -= 1
+		end
+		description
+	end
 
-		Sample.new(title, code)
+	def self.strip_blank_lines(lines)
+		lines.join("").strip.split("\n").map {|line| "#{line}\n" }
 	end
 end

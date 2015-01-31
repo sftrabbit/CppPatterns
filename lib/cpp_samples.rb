@@ -32,7 +32,7 @@ module CppSamples
 		subdir_title_file_names = Dir.glob("#{dir}/*/TITLE")
 
 		subdir_title_file_names.inject([]) do |sections, subdir_title_file_name|
-			sections << CppSamples::Section.new(subdir_title_file_name)
+			sections << Section.new(subdir_title_file_name)
 		end
 	end
 

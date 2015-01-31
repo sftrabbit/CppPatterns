@@ -33,7 +33,7 @@ module CppSamples
 			subdir_path = File.dirname(subdir_title_file_name)
 
 			subdir_title_file = File.new(subdir_title_file_name, 'r')
-			subdir_title = subdir_title_file.readline
+			subdir_title = subdir_title_file.readline.chomp
 
 			sections << Section.new(subdir_path, subdir_title)
 		end

@@ -4,6 +4,7 @@ require 'cpp_samples/version'
 
 module CppSamples
 	Section = Struct.new(:path, :title)
+	Sample = Struct.new(:title, :code)
 
 	SAMPLES_DIR = './samples'
 
@@ -41,6 +42,25 @@ module CppSamples
 
 	def self.collect_samples(dir)
 		sample_file_names = Dir.glob("#{dir}/*.cpp")
-		return sample_file_names
+		sample_file_names.inject([]) do |samples, sample_file_name|
+			samples << extract_sample(sample_file_name)
+		end
+	end
+
+	def self.extract_sample(sample_file_name)
+		sample_file = File.new(sample_file_name, 'r')
+
+		header = sample_file.readline
+		header_match = /^\/\/\s*(.+)/.match(header)
+
+		unless header_match
+			raise "invalid header line in sample file: #{sample_file_name}"
+		end
+
+		title = header_match[1]
+
+		code = sample_file.readlines.join().strip + "\n"
+
+		Sample.new(title, code)
 	end
 end

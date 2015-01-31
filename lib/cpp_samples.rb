@@ -18,7 +18,7 @@ module CppSamples
 			categories = build_dir(section.path)
 
 			tree[section] = categories.inject({}) do |tree_section, category|
-				tree_section[category] = []
+				tree_section[category] = collect_samples(category.path)
 				tree_section
 			end
 
@@ -37,5 +37,10 @@ module CppSamples
 
 			sections << Section.new(subdir_path, subdir_title)
 		end
+	end
+
+	def self.collect_samples(dir)
+		sample_file_names = Dir.glob("#{dir}/*.cpp")
+		return sample_file_names
 	end
 end

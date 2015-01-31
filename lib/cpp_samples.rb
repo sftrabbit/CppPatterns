@@ -21,6 +21,8 @@ module CppSamples
 				tree_section[category] = []
 				tree_section
 			end
+
+			tree
 		end
 	end
 

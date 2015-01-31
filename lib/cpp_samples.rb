@@ -66,7 +66,7 @@ module CppSamples
 		header_match = COMMENT_REGEX.match(header)
 
 		unless header_match
-			raise "invalid header line in sample file: #{sample_file_name}"
+			raise "invalid header line in sample"
 		end
 
 		header_match[1]

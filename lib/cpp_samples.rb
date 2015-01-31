@@ -1,9 +1,9 @@
 require 'pp'
 
 require 'cpp_samples/version'
+require 'cpp_samples/section'
 
 module CppSamples
-	Section = Struct.new(:path, :title)
 	Sample = Struct.new(:title, :code, :description)
 
 	SAMPLES_DIR = './samples'
@@ -32,12 +32,7 @@ module CppSamples
 		subdir_title_file_names = Dir.glob("#{dir}/*/TITLE")
 
 		subdir_title_file_names.inject([]) do |sections, subdir_title_file_name|
-			subdir_path = File.dirname(subdir_title_file_name)
-
-			subdir_title_file = File.new(subdir_title_file_name, 'r')
-			subdir_title = subdir_title_file.readline.chomp
-
-			sections << Section.new(subdir_path, subdir_title)
+			sections << CppSamples::Section.new(subdir_title_file_name)
 		end
 	end
 

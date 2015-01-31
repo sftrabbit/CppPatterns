@@ -2,4 +2,4 @@
 
 require 'cpp_samples'
 
-CppSamples.hello
+CppSamples.generate

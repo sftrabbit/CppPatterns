@@ -21,9 +21,11 @@ module CppSamples
 			sample_contents = strip_blank_lines(sample_file.readlines)
 
 			@title = extract_title(sample_contents)
-			@description = extract_description(sample_contents)
-			description_start = sample_contents.length - description.length
-			@code = strip_blank_lines(sample_contents[1..description_start-1])
+			description_lines = extract_description(sample_contents)
+			description_start = sample_contents.length - description_lines.length
+			@description = description_lines.join
+			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
+			@code_lines = code_lines.join
 		end
 
 		private def extract_title(lines)

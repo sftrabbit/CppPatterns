@@ -2,7 +2,9 @@
 layout: index
 ---
 			<section>
-				<h1 class="column-3">Common tasks</h1>
+{% for section in page.sample_sections %}
+				<h1 class="column-3">{{ section[0].title }}</h1>
+{% endfor %}
 				<section class="column-1">
 					<h1>Input streams</h1>
 					<ul>

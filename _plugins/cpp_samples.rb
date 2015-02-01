@@ -1,5 +1,3 @@
-require 'pp'
-
 module CppSamples
 	DEFAULT_SAMPLES_DIR = '_samples'
 	COMMENT_REGEX = /^\/\/\s*(.+)$/
@@ -9,7 +7,9 @@ module CppSamples
 			index = site.pages.detect { |page| page.url == '/index.html' }
 
 			samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
-			pp CppSamples::build_samples_tree(samples_dir)
+			samples_tree = CppSamples::build_samples_tree(samples_dir)
+
+			index.data['sample_sections'] = samples_tree
 		end
 	end
 
@@ -21,6 +21,10 @@ module CppSamples
 
 			title_file = File.new(title_file_name, 'r')
 			@title = title_file.readline.chomp
+		end
+
+		def to_liquid
+			return {'title' => @title, 'path' => @path}
 		end
 	end
 

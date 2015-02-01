@@ -1,3 +1,5 @@
 *.lock
 /pkg
 
+_site
+.sass-cache

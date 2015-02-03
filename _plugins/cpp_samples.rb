@@ -9,7 +9,7 @@ module CppSamples
 			samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
 			samples_tree = CppSamples::build_samples_tree(samples_dir)
 
-			index.data['sample_sections'] = samples_tree
+			index.data['sample_categories'] = samples_tree
 		end
 	end
 
@@ -42,6 +42,10 @@ module CppSamples
 			@description = description_lines.join
 			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
 			@code_lines = code_lines.join
+		end
+
+		def to_liquid
+			return {'title' => @title, 'code' => @code, 'description' => @description}
 		end
 
 		private def extract_title(lines)

@@ -2,62 +2,20 @@
 layout: index
 ---
 			<section>
-{% for section in page.sample_sections %}
-				<h1 class="column-3">{{ section[0].title }}</h1>
+{% for category in page.sample_categories %}
+				<h1 class="column-3">{{ category[0].title }}</h1>
+{% for section in category[1] %}
+				<section class="column-1">
+					<h1>{{ section[0].title }}</h1>
+					<ul>
+{% for sample in section[1] %}
+						<li class="sample">
+							<h1><a href="#">{{ sample.title }}</a></h1>
+							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
+						</li>
 {% endfor %}
-				<section class="column-1">
-					<h1>Input streams</h1>
-					<ul>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
 					</ul>
 				</section>
-				<section class="column-1">
-					<h1>Object management</h1>
-					<ul>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-					</ul>
-				</section>
-				<section class="column-1">
-					<h1>Random number generation</h1>
-					<ul>
-						<li class="sample">
-							<h1><a href="#">Roll a fair die</a></h1>
-							<p>Generate a random integer between 1 and 6.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-						<li class="sample">
-							<h1><a href="#">Read line of values into container</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
-					</ul>
-				</section>
+{% endfor %}
+{% endfor %}
 			</section>

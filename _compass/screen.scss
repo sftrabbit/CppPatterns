@@ -1,0 +1,64 @@
+@import "compass/reset";
+@import "compass/utilities/general/clearfix";
+
+@import 'layout';
+
+body {
+	font-family: 'Roboto';
+	font-size: 17px;
+}
+
+body > header {
+	background-color: #6AC05C;
+	color: #fff;
+}
+body > header h1 {
+	font-weight: normal;
+	font-size: 64px;
+	text-transform: lowercase;
+	margin: 0;
+}
+body > header p {
+	margin: 12px 0;
+}
+body > header h1 span {
+	font-weight: 100;
+}
+
+section h1 {
+	font-family: 'Roboto Slab';
+	font-size: 32px;
+	font-weight: normal;
+}
+section section h1 {
+	font-family: 'Roboto';
+	font-size: 22px;
+	border-left: none;
+	padding: 0;
+	margin: 0;
+}
+
+li.sample {
+margin-bottom: 16px;
+}
+li.sample h1 {
+	font-family: 'Roboto';
+	font-size: 17px;
+	border-bottom: none;
+	margin: 0;
+}
+li.sample p {
+	margin: 4px 0;
+	color: #777;
+	font-size: 14px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+a {
+	color: #1F9680;
+	text-decoration: none;
+}

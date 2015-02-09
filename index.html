@@ -3,19 +3,23 @@ layout: index
 ---
 			<section>
 {% for category in page.sample_categories %}
-				<h1 class="column-3">{{ category[0].title }}</h1>
+				<div class="row">
+					<h1 class="column-3">{{ category[0].title }}</h1>
+				</div>
+				<div class="row">
 {% for section in category[1] %}
-				<section class="column-1">
-					<h1>{{ section[0].title }}</h1>
-					<ul>
+					<section class="column-1">
+						<h1>{{ section[0].title }}</h1>
+						<ul>
 {% for sample in section[1] %}
-						<li class="sample">
-							<h1><a href="#">{{ sample.title }}</a></h1>
-							<p>Extract a sequence of integer values from a stream and push them into a container.</p>
-						</li>
+							<li class="sample">
+								<h1><a href="#">{{ sample.title }}</a></h1>
+								<p>Extract a sequence of integer values from a stream and push them into a container.</p>
+							</li>
 {% endfor %}
-					</ul>
-				</section>
+						</ul>
+					</section>
 {% endfor %}
+				</div>
 {% endfor %}
 			</section>

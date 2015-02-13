@@ -6,7 +6,9 @@ layout: index
 					<h1 class="column-3">{{ page.sample.title }}</h1>
 				</div>
 				<div class="row">
-					<pre class="column-3"><code>{{ page.sample.code | escape }}</code></pre>
+					<div class="column-3">
+						{% highlight cpp %}{{ page.sample.code }}{% endhighlight %}
+					</div>
 				</div>
 				<div class="row">
 					<p class="column-3">{{ page.sample.description }}</p>

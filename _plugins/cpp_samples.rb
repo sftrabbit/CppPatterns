@@ -3,11 +3,11 @@ module CppSamples
 	COMMENT_REGEX = /^\/\/\s*(.+)$/
 
 	class SamplePage < Jekyll::Page
-		def initialize(site, dir, sample)
+		def initialize(site, sample)
 			@site = site
 			@base = site.source
-			@dir = dir
-			@name = 'sample.html'
+			@dir = File.dirname(sample.path)
+			@name = "#{File.basename(sample.path)}.html"
 
 			process(@name)
 			read_yaml(File.join(@base, ''), '_sample.html')
@@ -28,7 +28,7 @@ module CppSamples
 			samples_tree.each do |category, sections|
 				sections.each do |section, samples|
 					samples.each do |sample|
-						site.pages << SamplePage.new(site, '', sample)
+						site.pages << SamplePage.new(site, sample)
 					end
 				end
 			end
@@ -51,10 +51,14 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :title, :code, :description
+		attr_accessor :title, :code, :description, :path
 
 		def initialize(sample_file_name)
 			sample_file = File.new(sample_file_name, 'r')
+
+			file_name_parts = sample_file_name.split('/')[-3..-1]
+			file_name_parts[2] = File.basename(file_name_parts[2], '.*')
+			@path = file_name_parts.join('/')
 
 			sample_contents = strip_blank_lines(sample_file.readlines)
 
@@ -67,7 +71,12 @@ module CppSamples
 		end
 
 		def to_liquid
-			return {'title' => @title, 'code' => @code, 'description' => @description}
+			{
+				'title' => @title,
+				'code' => @code,
+				'description' => @description,
+				'path' => @path
+			}
 		end
 
 		private def extract_title(lines)

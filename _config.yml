@@ -1,2 +1,3 @@
+baseurl: /
 gems:
 - jekyll-compass

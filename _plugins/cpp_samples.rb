@@ -63,7 +63,7 @@ module CppSamples
 			description_start = sample_contents.length - description_lines.length
 			@description = description_lines.join
 			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
-			@code_lines = code_lines.join
+			@code = code_lines.join
 		end
 
 		def to_liquid

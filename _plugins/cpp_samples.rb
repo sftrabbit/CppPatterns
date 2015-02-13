@@ -2,6 +2,20 @@ module CppSamples
 	DEFAULT_SAMPLES_DIR = '_samples'
 	COMMENT_REGEX = /^\/\/\s*(.+)$/
 
+	class SamplePage < Jekyll::Page
+		def initialize(site, dir, sample)
+			@site = site
+			@base = site.source
+			@dir = dir
+			@name = 'sample.html'
+
+			process(@name)
+			read_yaml(File.join(@base, ''), '_sample.html')
+
+			self.data['sample'] = sample
+		end
+	end
+
 	class SamplesGenerator < Jekyll::Generator
 		def generate(site)
 			index = site.pages.detect { |page| page.url == '/index.html' }
@@ -10,6 +24,14 @@ module CppSamples
 			samples_tree = CppSamples::build_samples_tree(samples_dir)
 
 			index.data['sample_categories'] = samples_tree
+
+			samples_tree.each do |category, sections|
+				sections.each do |section, samples|
+					samples.each do |sample|
+						site.pages << SamplePage.new(site, '', sample)
+					end
+				end
+			end
 		end
 	end
 

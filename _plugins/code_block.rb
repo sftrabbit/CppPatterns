@@ -4,11 +4,17 @@ module CppSamples
 			code = code.sub(/<div.*><pre>\n*/,'').sub(/\n*<\/pre><\/div>/,'')
 			code.strip!
 
-			line_count = code.split("\n").length
+			line_num = 0
 			line_nums = ''
-			(1..line_count).each do |line_num|
+			code_lines = code.split("\n")
+			code_lines.map! do |line|
+				line_num += 1
 				line_nums += "#{line_num}\n"
+				leading_whitespace = /^\s*/.match(line)
+				start_line = leading_whitespace[0].length
+				"#{leading_whitespace}<span class=\"line#{line_num}\">#{line[start_line..-1]}</span>"
 			end
+			code = code_lines.join("\n")
 
 			output = '<table class="codeblock"><tr>'
 			output += "<td class=\"linenums\"><pre><code>#{line_nums}</code></pre></td>"

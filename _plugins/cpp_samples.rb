@@ -71,6 +71,7 @@ module CppSamples
 			@code = code_lines.join
 
 			@contributors = get_contributors(sample_file_name)
+			@modified_date = get_modified_date(sample_file_name)
 		end
 
 		def to_liquid
@@ -79,6 +80,7 @@ module CppSamples
 				'code' => @code,
 				'description' => @description,
 				'contributors' => @contributors,
+				'modified_date' => @modified_date,
 				'path' => @path
 			}
 		end
@@ -137,6 +139,12 @@ module CppSamples
 			end
 
 			contributors
+		end
+
+		private def get_modified_date(file_name)
+			Dir.chdir('_samples') do
+				`git log -1 --format="format:%ad" -- #{@path}.cpp`.strip
+			end
 		end
 	end
 

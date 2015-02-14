@@ -94,7 +94,7 @@ module CppSamples
 			description = []
 			line_index = lines.length - 1
 			while match = COMMENT_REGEX.match(lines[line_index])
-				description.unshift(match[1])
+				description.unshift("#{match[1]}\n")
 				line_index -= 1
 			end
 			description

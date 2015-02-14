@@ -73,18 +73,20 @@ code {
 }
 
 .codeblock {
-	padding: 16px 24px;
 	display: block;
 	background-color: #2c2c2c;
 	color: #fff;
+	overflow-x: auto;
 
 	.linenums {
-		padding-right: 8px;
+		position: absolute;
+		padding: 16px 8px 16px 24px;
 		text-align: right;
 		color: #6b6b6b;
+		background-color: #2c2c2c;
 		border-right: 1px solid #3f3f3f;
 	}
 	.code {
-		padding-left: 16px;
+		padding: 16px 24px 16px 64px;
 	}
 }

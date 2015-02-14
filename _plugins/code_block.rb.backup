@@ -1,0 +1,40 @@
+module CppSamples
+
+	class CodeBlock < Liquid::Block
+		SYNTAX = /^([a-zA-Z0-9.+#-]+)((\s+\w+(=(\w+|"([0-9]+\s)*[0-9]+"))?)*)$/
+
+		def initialize(tag_name, markup, tokens)
+			super
+			if markup =~ SYNTAX
+				@lang = $1.downcase
+			else
+				raise SyntaxError.new <<-eos
+Syntax Error in tag 'highlight' while parsing the following markup:
+	#{markup}
+Valid syntax: highlight <lang> [linenos]
+eos
+			end
+		end
+
+		def render(context)
+			prefix = context["highlighter_prefix"] || ""
+			suffix = context["highlighter_suffix"] || ""
+			code = super.to_s.gsub(/\A(\n|\r)+|(\n|\r)+\z/, '')
+
+			case context.registers[:site].highlighter
+			when 'pygments'
+				output = render_pygments(code, is_safe)
+			when 'rouge'
+				output = render_rouge(code)
+			else
+				output = render_codehighlighter(code)
+			end
+
+			rendered_output = add_code_tag(output)
+			prefix + rendered_output + suffix
+		end
+	end
+
+end
+
+Liquid::Template.register_tag('codeblock', CppSamples::CodeBlock)

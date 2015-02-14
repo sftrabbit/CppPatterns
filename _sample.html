@@ -11,6 +11,8 @@ layout: index
 					</div>
 				</div>
 				<div class="row">
-					<p class="column-3">{{ page.sample.description }}</p>
+					<div class="column-3">
+						{{ page.sample.description | markdownify }}
+					</div>
 				</div>
 			</section>

@@ -18,9 +18,9 @@ layout: index
 						<h1>Sample info</h1>
 						<h2>Contributors</h2>
 						<ul class="contributors">
-							<li><a href="#"><img src="https://avatars.githubusercontent.com/u/32490?v=3" alt="Joseph Mansfield"></a></li>
-							<li><a href="#"><img src="https://avatars.githubusercontent.com/u/32490?v=3" alt="Joseph Mansfield"></a></li>
-							<li><a href="#"><img src="https://avatars.githubusercontent.com/u/32490?v=3" alt="Joseph Mansfield"></a></li>
+{% for contributor in page.sample.contributors %}
+							<li><a href="{{ contributor.url }}"><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
+{% endfor %}
 						</ul>
 						<h2>Source</h2>
 						<p><a href="#">Fork this sample on GitHub</a></p>

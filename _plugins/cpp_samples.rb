@@ -51,7 +51,7 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :title, :code, :description, :path
+		attr_accessor :title, :code, :description, :path, :contributors
 
 		def initialize(sample_file_name)
 			sample_file = File.new(sample_file_name, 'r')
@@ -66,6 +66,8 @@ module CppSamples
 			@description = description_lines.join
 			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
 			@code = code_lines.join
+
+			@contributors = get_contributors(sample_file_name)
 		end
 
 		def to_liquid
@@ -73,6 +75,7 @@ module CppSamples
 				'title' => @title,
 				'code' => @code,
 				'description' => @description,
+				'contributors' => @contributors,
 				'path' => @path
 			}
 		end
@@ -106,6 +109,10 @@ module CppSamples
 
 		private def strip_blank_lines(lines)
 			lines.join("").strip.split("\n").map {|line| "#{line}\n" }
+		end
+
+		private def get_contributors(file_name)
+			[{'name' => "Joseph Mansfield", 'image' => "https://avatars.githubusercontent.com/u/32490?v=3", 'url' => ""}]
 		end
 	end
 

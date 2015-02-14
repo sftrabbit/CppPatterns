@@ -56,9 +56,7 @@ module CppSamples
 		def initialize(sample_file_name)
 			sample_file = File.new(sample_file_name, 'r')
 
-			file_name_parts = sample_file_name.split('/')[-3..-1]
-			file_name_parts[2] = File.basename(file_name_parts[2], '.*')
-			@path = file_name_parts.join('/')
+			@path = file_name_to_path(sample_file_name)
 
 			sample_contents = strip_blank_lines(sample_file.readlines)
 
@@ -77,6 +75,12 @@ module CppSamples
 				'description' => @description,
 				'path' => @path
 			}
+		end
+
+		private def file_name_to_path(file_name)
+			file_name_parts = file_name.split('/')[-3..-1]
+			file_name_parts[2] = File.basename(file_name_parts[2], '.*')
+			file_name_parts.join('/')
 		end
 
 		private def extract_title(lines)

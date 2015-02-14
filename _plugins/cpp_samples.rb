@@ -1,3 +1,6 @@
+require 'net/http'
+require 'uri'
+
 module CppSamples
 	DEFAULT_SAMPLES_DIR = '_samples'
 	COMMENT_REGEX = /^\/\/\s*(.+)$/
@@ -112,7 +115,28 @@ module CppSamples
 		end
 
 		private def get_contributors(file_name)
-			[{'name' => "Joseph Mansfield", 'image' => "https://avatars.githubusercontent.com/u/32490?v=3", 'url' => ""}]
+			emails = nil
+			Dir.chdir('_samples') do
+				gitlog_output = `git log --format="format:%ae" -- #{@path}.cpp`
+				emails = gitlog_output.split("\n")
+			end
+
+			contributors = []
+
+			emails.each do |email|
+				search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
+				search_response = Net::HTTP.get_response(search_uri)
+				search_result = JSON.parse(search_response.body)
+				user = search_result['items'][0]
+
+				contributors << {
+					'name' => user['login'],
+					'image' => user['avatar_url'],
+					'url' => user['html_url']
+				}
+			end
+
+			contributors
 		end
 	end
 

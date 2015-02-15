@@ -183,7 +183,7 @@ module CppSamples
 	end
 
 	def self.build_dir(dir)
-		subdir_title_file_names = Dir.glob("#{dir}/*/TITLE")
+		subdir_title_file_names = Dir.glob("#{dir}/*/TITLE").sort
 
 		subdir_title_file_names.inject([]) do |sections, subdir_title_file_name|
 			sections << Section.new(subdir_title_file_name)

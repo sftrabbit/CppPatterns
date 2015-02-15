@@ -124,6 +124,7 @@ module CppSamples
 				gitlog_output = `git log --format="format:%ae" -- #{@path}.cpp`
 				emails = gitlog_output.split("\n")
 			end
+			emails.uniq!
 
 			contributors = []
 

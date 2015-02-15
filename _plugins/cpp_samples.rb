@@ -132,13 +132,24 @@ module CppSamples
 				search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
 				search_response = Net::HTTP.get_response(search_uri)
 				search_result = JSON.parse(search_response.body)
-				user = search_result['items'][0]
 
-				contributors << {
-					'name' => user['login'],
-					'image' => user['avatar_url'],
-					'url' => user['html_url']
-				}
+				if search_result['items'].empty?
+					contributor = {
+						'name' => email,
+						'image' => '/images/unknown_user.png',
+						'url' => nil
+					}
+				else
+					user = search_result['items'][0]
+
+					contributor = {
+						'name' => user['login'],
+						'image' => user['avatar_url'],
+						'url' => user['html_url']
+					}
+				end
+
+				contributors << contributor
 			end
 
 			contributors

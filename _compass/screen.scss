@@ -112,6 +112,14 @@ p {
 	margin-bottom: 1em;
 }
 
+em, i {
+	font-style: italic;
+}
+
+strong, b {
+	font-weight: bold;
+}
+
 .sample-info {
 	h1 {
 		display: none;

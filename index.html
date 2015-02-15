@@ -14,7 +14,7 @@ layout: index
 {% for sample in section[1] %}
 							<li class="sample">
 								<h1><a href="{{ site.baseurl }}{{ sample.path }}.html">{{ sample.title }}</a></h1>
-								<p>Extract a sequence of integer values from a stream and push them into a container.</p>
+								{{ sample | sample_excerpt }}
 							</li>
 {% endfor %}
 						</ul>

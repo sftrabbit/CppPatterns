@@ -1,7 +1,7 @@
 require 'jekyll/filters'
 
 module CppSamples
-	module SampleMarkdownFilter
+	module SampleFilters
 		include Jekyll::Filters
 
 		def sample_description(sample)
@@ -18,7 +18,18 @@ module CppSamples
 
 			markdownify(description)
 		end
+
+		def sample_excerpt(sample)
+			description = sample['description']
+			blank_line_index = /\n[\t ]*\n/ =~ description
+
+			if blank_line_index
+				return markdownify(description[0..blank_line_index])
+			end
+
+			markdownify(description)
+		end
 	end
 end
 
-Liquid::Template.register_filter(CppSamples::SampleMarkdownFilter)
+Liquid::Template.register_filter(CppSamples::SampleFilters)

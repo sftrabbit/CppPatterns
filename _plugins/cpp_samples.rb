@@ -54,7 +54,7 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :title, :code, :description, :path, :contributors
+		attr_accessor :path, :code_offset
 
 		def initialize(sample_file_name)
 			sample_file = File.new(sample_file_name, 'r')
@@ -69,6 +69,7 @@ module CppSamples
 			@description = description_lines.join
 			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
 			@code = code_lines.join
+			@code_offset = sample_contents.index(code_lines[0])
 
 			@contributors = get_contributors(sample_file_name)
 			@modified_date = get_modified_date(sample_file_name)
@@ -78,6 +79,7 @@ module CppSamples
 			{
 				'title' => @title,
 				'code' => @code,
+				'code_offset' => @code_offset,
 				'description' => @description,
 				'contributors' => @contributors,
 				'modified_date' => @modified_date,

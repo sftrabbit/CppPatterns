@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						<h2>Contributors</h2>
 						<ul class="contributors">
 {% for contributor in page.sample.contributors %}
-							<li><a {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
+							<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
 {% endfor %}
 						</ul>
 						<h2>Source</h2>

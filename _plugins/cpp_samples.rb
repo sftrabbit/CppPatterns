@@ -119,23 +119,28 @@ module CppSamples
 		end
 
 		private def get_contributors(file_name)
-			emails = nil
+			committers = nil
 			Dir.chdir('_samples') do
-				gitlog_output = `git log --format="format:%ae" -- #{@path}.cpp`
-				emails = gitlog_output.split("\n")
+				gitlog_output = `git log --format="format:%ae %an" -- #{@path}.cpp`
+				committer_strings = gitlog_output.split("\n")
+				committers = committer_strings.inject([]) do |committers, committer_string|
+					split_committer_string = committer_string.split(/\s/,2)
+					committers << {'email' => split_committer_string[0], 'name' => split_committer_string[1]}
+				end
 			end
-			emails.uniq!
+
+			committers.uniq! {|committer| committer['email'] }
 
 			contributors = []
 
-			emails.each do |email|
-				search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
+			committers.each do |committer|
+				search_uri = URI.parse("https://api.github.com/search/users?q=#{committer['email']}+in:email&per_page=1")
 				search_response = Net::HTTP.get_response(search_uri)
 				search_result = JSON.parse(search_response.body)
 
 				if search_result['items'].empty?
 					contributor = {
-						'name' => email,
+						'name' => committer['name'],
 						'image' => '/images/unknown_user.png',
 						'url' => nil
 					}
@@ -143,7 +148,7 @@ module CppSamples
 					user = search_result['items'][0]
 
 					contributor = {
-						'name' => user['login'],
+						'name' => committer['name'],
 						'image' => user['avatar_url'],
 						'url' => user['html_url']
 					}

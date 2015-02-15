@@ -1,6 +1,25 @@
 ---
 layout: index
 ---
+			<script>
+document.addEventListener('DOMContentLoaded', function() {
+	var lineRefElements = document.getElementsByClassName('lineref');
+	for (var i = 0; i < lineRefElements.length; i++) {
+		lineRefElements[i].onmouseover = function(event) {
+			var lineRefElement = event.target;
+			var lineNum = lineRefElement.dataset.line;
+			var lineElement = document.getElementsByClassName('line'+lineNum)[0];
+			lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+		}
+		lineRefElements[i].onmouseout = function(event) {
+			var lineRefElement = event.target;
+			var lineNum = lineRefElement.dataset.line;
+			var lineElement = document.getElementsByClassName('line'+lineNum)[0];
+			lineElement.style.backgroundColor = "transparent";
+		}
+	}
+}, false);
+			</script>
 			<section>
 				<div class="row">
 					<h1 class="column-3">{{ page.sample.title }}</h1>

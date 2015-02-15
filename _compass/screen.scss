@@ -90,8 +90,18 @@ code {
 		border-right: 1px solid #3f3f3f;
 	}
 	.code {
+		width: 100%;
 		padding: 16px 24px 16px 64px;
+
+		.codeline {
+			display: inline-block;
+			width: 100%;
+		}
 	}
+}
+
+.lineref {
+	border-bottom: 1px dotted #000;
 }
 
 p {

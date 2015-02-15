@@ -10,9 +10,7 @@ module CppSamples
 			code_lines.map! do |line|
 				line_num += 1
 				line_nums += "#{line_num}\n"
-				leading_whitespace = /^\s*/.match(line)
-				start_line = leading_whitespace[0].length
-				"#{leading_whitespace}<span class=\"line#{line_num}\">#{line[start_line..-1]}</span>"
+				"<span class=\"codeline line#{line_num}\">#{line}</span>"
 			end
 			code = code_lines.join("\n")
 

@@ -7,7 +7,8 @@ module CppSamples
 		def sample_description(sample)
 			description = sample['description']
 			description.gsub!(/\[(\d+)\]/) do |match|
-				"line #{$1.to_i - sample['code_offset']}"
+				line_num = $1.to_i - sample['code_offset']
+				"<span class=\"lineref\" data-line=\"#{line_num}\">line #{line_num}</span>"
 			end
 			markdownify(description)
 		end

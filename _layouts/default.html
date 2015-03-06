@@ -1,1 +1,35 @@
-foo        {{ content }}
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>C++ Samples</title>
+		<link href="http://fonts.googleapis.com/css?family=Roboto:400italic,100,700italic,700,400|Roboto+Slab|Ubuntu+Mono" rel="stylesheet" type="text/css">
+		<link href="{{ site.baseurl }}css/screen.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<header>
+			<div class="container">
+				<div class="row">
+					<div class="column-3">
+						<h1><a href="{{ site.baseurl }}"><span>C++</span>​Samples</a></h1>
+						<p>A repository of modern C++ code samples using only the standard library and curated by the community.</p>
+					</div>
+				</div>
+			</div>
+		</header>
+		<main class="container">
+{{ content }}
+		</main>
+		<footer class="container">
+			<div class="row">
+				<div class="column-2">
+					<p>Feel like <b>contributing</b>? This website is generated from a git repository. If you have something to add or have noticed a mistake, please <a href="#">fork the project on GitHub</a>.</p>
+				</div>
+				<div class="column-1 about">
+					<img src="http://josephmansfield.uk/images/logo.svg">
+					<p>C++ Samples created by <a href="http://josephmansfield.uk/">Joseph Mansfield</a></p>
+				</div>
+			</div>
+		</footer>
+	</body>
+</html>

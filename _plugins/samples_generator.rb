@@ -90,6 +90,7 @@ module CppSamples
 		private def file_name_to_path(file_name)
 			file_name_parts = file_name.split('/')[-3..-1]
 			file_name_parts[2] = File.basename(file_name_parts[2], '.*')
+			file_name_parts[0].slice!(/^\d+\-/)
 			file_name_parts.join('/')
 		end
 

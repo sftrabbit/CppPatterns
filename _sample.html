@@ -2,20 +2,30 @@
 layout: default
 ---
 			<script>
+function apply_to_lines(lineRefElement, callback) {
+	var lineNumStart = parseInt(lineRefElement.dataset.line);
+	var lineNumEnd = lineNumStart;
+	if (lineRefElement.dataset.lineEnd) {
+		var lineNumEnd = parseInt(lineRefElement.dataset.lineEnd);
+	}
+	for (var i = lineNumStart; i <= lineNumEnd; i++) {
+		var lineElement = document.getElementsByClassName('line'+i)[0];
+		callback(lineElement);
+	}
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 	var lineRefElements = document.getElementsByClassName('lineref');
 	for (var i = 0; i < lineRefElements.length; i++) {
 		lineRefElements[i].onmouseover = function(event) {
-			var lineRefElement = event.target;
-			var lineNum = lineRefElement.dataset.line;
-			var lineElement = document.getElementsByClassName('line'+lineNum)[0];
-			lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+			apply_to_lines(event.target, function(lineElement) {
+				lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+			});
 		}
 		lineRefElements[i].onmouseout = function(event) {
-			var lineRefElement = event.target;
-			var lineNum = lineRefElement.dataset.line;
-			var lineElement = document.getElementsByClassName('line'+lineNum)[0];
-			lineElement.style.backgroundColor = "transparent";
+			apply_to_lines(event.target, function(lineElement) {
+				lineElement.style.backgroundColor = "transparent";
+			});
 		}
 	}
 }, false);

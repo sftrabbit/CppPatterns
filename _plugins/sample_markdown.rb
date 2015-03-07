@@ -15,7 +15,7 @@ module CppSamples
 			description.gsub!(/\[(\d+)\-(\d+)\]/) do |match|
 				line_num_start = $1.to_i - sample['code_offset']
 				line_num_end = $2.to_i - sample['code_offset']
-				"<span class=\"lineref\" data-line=\"#{line_num_start}\" data-line-end=\"#{line_num_end}\">lines #{line_num_start}-#{line_num_end}</span>"
+				"<span class=\"lineref\" data-line=\"#{line_num_start}\" data-line-end=\"#{line_num_end}\">lines #{line_num_start}&ndash;#{line_num_end}</span>"
 			end
 
 			description.gsub!(/\[(.+?)\]\((c(pp)?\/.+?)\)/) do |match|

@@ -16,6 +16,10 @@ body > header {
 
 	a {
 		color: #fff;
+
+		&:visited {
+			color: #fff;
+		}
 	}
 }
 
@@ -73,6 +77,10 @@ ul {
 a {
 	color: #3A6A8C;
 	text-decoration: none;
+
+	&:visited {
+		color: #743A8C;
+	}
 }
 
 code {

@@ -16,7 +16,7 @@ module CppSamples
 
 			output = '<table class="codeblock"><tr>'
 			output += "<td class=\"linenums\"><pre><code>#{line_nums}</code></pre></td>"
-			output += "<td class=\"code highlight\"><pre><code>#{code}</code></pre></td>"
+			output += "<td class=\"code highlight\"><pre><code class=\"cpp\">#{code}</code></pre></td>"
 			output += '</tr></table>'
 		end
 	end

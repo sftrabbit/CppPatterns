@@ -3,6 +3,7 @@ layout: default
 ---
 			<section>
 {% for category in page.sample_categories %}
+{% assign outerloop = forloop %}
 				<div class="row">
 					<h1 class="column-3">{{ category[0].title }}</h1>
 				</div>
@@ -19,7 +20,8 @@ layout: default
 {% endfor %}
 						</ul>
 					</section>
-				{% cycle '', '', '</div><div class="row">' %}
+				{% assign groupname = outerloop.index %}
+				{% cycle groupname: '', '', '</div><div class="row">' %}
 {% endfor %}
 				</div>
 {% endfor %}

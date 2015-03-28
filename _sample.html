@@ -9,7 +9,7 @@ function apply_to_lines(lineRefElement, callback) {
 		var lineNumEnd = parseInt(lineRefElement.dataset.lineEnd);
 	}
 	for (var i = lineNumStart; i <= lineNumEnd; i++) {
-		var lineElement = document.getElementsByClassName('line'+i)[0];
+		var lineElement = document.getElementById('line'+i);
 		callback(lineElement);
 	}
 }

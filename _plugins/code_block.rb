@@ -10,7 +10,7 @@ module CppSamples
 			code_lines.map! do |line|
 				line_num += 1
 				line_nums += "#{line_num}\n"
-				"<span class=\"codeline line#{line_num}\">#{line}</span>"
+				"<span class=\"codeline\" id=\"line#{line_num}\">#{line}</span>"
 			end
 			code = code_lines.join("\n")
 

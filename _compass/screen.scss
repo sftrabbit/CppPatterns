@@ -117,8 +117,9 @@ pre {
 	}
 }
 
-.lineref {
+a.lineref {
 	border-bottom: 1px dotted #000;
+	color: inherit;
 }
 
 p {

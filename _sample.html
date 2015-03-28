@@ -2,6 +2,8 @@
 layout: default
 ---
 			<script>
+var selected = false;
+
 function apply_to_lines(lineRefElement, callback) {
 	var lineNumStart = parseInt(lineRefElement.dataset.line);
 	var lineNumEnd = lineNumStart;
@@ -14,18 +16,44 @@ function apply_to_lines(lineRefElement, callback) {
 	}
 }
 
+function clear_all() {
+	var i = 1;
+	var lineElement;
+	while (lineElement = document.getElementById('line'+i)) {
+		lineElement.style.backgroundColor = "transparent";
+		i++;
+	}
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+	document.onclick = function(event) {
+		clear_all();
+	}
+
 	var lineRefElements = document.getElementsByClassName('lineref');
 	for (var i = 0; i < lineRefElements.length; i++) {
+		lineRefElements[i].onclick = function(event) {
+			clear_all();
+			apply_to_lines(event.target, function(lineElement) {
+				lineElement.style.backgroundColor = "rgb(76, 69, 41)";
+			});
+			event.stopPropagation();
+		}
 		lineRefElements[i].onmouseover = function(event) {
 			apply_to_lines(event.target, function(lineElement) {
-				lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+				if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
+					lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+				}
 			});
+			event.stopPropagation();
 		}
 		lineRefElements[i].onmouseout = function(event) {
 			apply_to_lines(event.target, function(lineElement) {
-				lineElement.style.backgroundColor = "transparent";
+				if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
+					lineElement.style.backgroundColor = "transparent";
+				}
 			});
+			event.stopPropagation();
 		}
 	}
 }, false);

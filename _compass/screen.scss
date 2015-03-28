@@ -113,6 +113,10 @@ pre {
 		.codeline {
 			display: inline-block;
 			width: 100%;
+
+			&:before {
+				content: "\200B";
+			}
 		}
 	}
 }

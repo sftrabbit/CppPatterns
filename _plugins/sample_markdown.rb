@@ -12,10 +12,21 @@ module CppSamples
 				"<span class=\"lineref\" data-line=\"#{line_num}\">line #{line_num}</span>"
 			end
 
+			description.gsub!(/\[!(\d+)\]/) do |match|
+				line_num = $1.to_i - sample['code_offset']
+				"<span class=\"lineref\" data-line=\"#{line_num}\">Line #{line_num}</span>"
+			end
+
 			description.gsub!(/\[(\d+)\-(\d+)\]/) do |match|
 				line_num_start = $1.to_i - sample['code_offset']
 				line_num_end = $2.to_i - sample['code_offset']
 				"<span class=\"lineref\" data-line=\"#{line_num_start}\" data-line-end=\"#{line_num_end}\">lines #{line_num_start}&ndash;#{line_num_end}</span>"
+			end
+
+			description.gsub!(/\[!(\d+)\-(\d+)\]/) do |match|
+				line_num_start = $1.to_i - sample['code_offset']
+				line_num_end = $2.to_i - sample['code_offset']
+				"<span class=\"lineref\" data-line=\"#{line_num_start}\" data-line-end=\"#{line_num_end}\">Lines #{line_num_start}&ndash;#{line_num_end}</span>"
 			end
 
 			description.gsub!(/\[(.+?)\]\((c(pp)?\/.+?)\)/) do |match|

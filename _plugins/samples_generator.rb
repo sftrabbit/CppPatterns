@@ -120,9 +120,11 @@ module CppSamples
 		end
 
 		private def get_contributors(file_name)
+			real_path = file_name.split('/')[-3..-1].join('/')
+
 			committers = nil
 			Dir.chdir('_samples') do
-				gitlog_output = `git log --follow --format="format:%ae %an" -- #{@path}.cpp`
+				gitlog_output = `git log --follow --format="format:%ae %an" -- #{real_path}`
 				committer_strings = gitlog_output.split("\n")
 				committers = committer_strings.inject([]) do |committers, committer_string|
 					split_committer_string = committer_string.split(/\s/,2)

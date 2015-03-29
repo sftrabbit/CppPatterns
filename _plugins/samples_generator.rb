@@ -152,7 +152,7 @@ module CppSamples
 
 					contributor = {
 						'name' => committer['name'],
-						'image' => user['avatar_url'],
+						'image' => user['avatar_url'] + '&size=36',
 						'url' => user['html_url']
 					}
 				end

@@ -11,9 +11,9 @@ layout: default
 {% for section in category[1] %}
 					<section class="column-1">
 						<h1>{{ section[0].title }}</h1>
-						<ul>
+						<ul class="samples">
 {% for sample in section[1] %}
-							<li class="sample">
+							<li>
 								<h1><a href="{{ site.baseurl }}{{ sample.path }}.html">{{ sample.title }}</a></h1>
 								{{ sample | sample_excerpt }}
 							</li>

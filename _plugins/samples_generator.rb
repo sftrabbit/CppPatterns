@@ -3,7 +3,7 @@ require 'uri'
 
 module CppSamples
 	DEFAULT_SAMPLES_DIR = '_samples'
-	COMMENT_REGEX = /^\/\/\s*(.+)$/
+	COMMENT_REGEX = /^\/\/\s*(.+)?$/
 
 	class SamplesGenerator < Jekyll::Generator
 		def generate(site)

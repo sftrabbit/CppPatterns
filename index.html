@@ -15,7 +15,7 @@ layout: default
 {% for sample in section[1] %}
 							<li>
 								<h1><a href="{{ site.baseurl }}{{ sample.path }}.html">{{ sample.title }}</a></h1>
-								{{ sample | sample_excerpt }}
+								{{ sample | sample_intent }}
 							</li>
 {% endfor %}
 						</ul>

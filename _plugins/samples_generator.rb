@@ -64,10 +64,13 @@ module CppSamples
 			sample_contents = strip_blank_lines(sample_file.readlines)
 
 			@title = extract_title(sample_contents)
-			description_lines = extract_description(sample_contents)
-			description_start = sample_contents.length - description_lines.length
-			@description = description_lines.join
-			code_lines = strip_blank_lines(sample_contents[1..description_start-1])
+
+			body_lines = extract_body(sample_contents)
+			@intent, @description = extract_body_parts(body_lines)
+
+			body_start = sample_contents.length - body_lines.length
+
+			code_lines = strip_blank_lines(sample_contents[1..body_start-1])
 			@code = code_lines.join
 			@code_offset = sample_contents.index(code_lines[0])
 
@@ -81,6 +84,7 @@ module CppSamples
 				'code' => @code,
 				'code_offset' => @code_offset,
 				'description' => @description,
+				'intent' => @intent,
 				'contributors' => @contributors,
 				'modified_date' => @modified_date,
 				'path' => @path
@@ -105,14 +109,21 @@ module CppSamples
 			header_match[1]
 		end
 
-		private def extract_description(lines)
-			description = []
+		private def extract_body(lines)
+			body = []
 			line_index = lines.length - 1
 			while match = COMMENT_REGEX.match(lines[line_index])
-				description.unshift("#{match[1]}\n")
+				body.unshift("#{match[1]}\n")
 				line_index -= 1
 			end
-			description
+			body
+		end
+
+		private def extract_body_parts(body_lines)
+			blank_line_index = body_lines.index {|line| /^[\t ]*\n$/ =~ line}
+			intent = body_lines[0..blank_line_index].join()
+			description = body_lines[blank_line_index+1..-1].join()
+			return intent, description
 		end
 
 		private def strip_blank_lines(lines)

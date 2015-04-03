@@ -67,6 +67,9 @@ document.addEventListener('DOMContentLoaded', function() {
 						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
 					</div>
 					<div class="column-3">
+						<h2>Intent</h2>
+						{{ page.sample | sample_intent }}
+						<h2>Description</h2>
 						{{ page.sample | sample_description }}
 						<h2>Contributors</h2>
 						<ul class="contributors">

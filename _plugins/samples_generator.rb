@@ -65,10 +65,8 @@ module CppSamples
 
 			@title = extract_title(sample_contents)
 
-			body_lines = extract_body(sample_contents)
+			body_lines, body_start = extract_body(sample_contents)
 			@intent, @description = extract_body_parts(body_lines)
-
-			body_start = sample_contents.length - body_lines.length
 
 			code_lines = strip_blank_lines(sample_contents[1..body_start-1])
 			@code = code_lines.join
@@ -112,11 +110,17 @@ module CppSamples
 		private def extract_body(lines)
 			body = []
 			line_index = lines.length - 1
+
+			while not COMMENT_REGEX.match(lines[line_index])
+				line_index -= 1
+			end
+
 			while match = COMMENT_REGEX.match(lines[line_index])
 				body.unshift("#{match[1]}\n")
 				line_index -= 1
 			end
-			body
+
+			return body, line_index
 		end
 
 		private def extract_body_parts(body_lines)

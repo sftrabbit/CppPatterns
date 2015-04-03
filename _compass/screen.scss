@@ -59,30 +59,26 @@ ul.samples {
 	padding: 0;
 
 	li {
-	margin-bottom: 16px;
+		margin-bottom: 24px;
 	}
 	
 	li h1 {
 		font-family: 'Roboto';
 		font-size: 17px;
 		border-bottom: none;
-		margin: 0;
+		margin-bottom: 5px;
 	}
 	
 	li p {
 		margin: 4px 0;
-		color: #777;
 		font-size: 14px;
+		color: #777;
 	}
 }
 
 a {
 	color: #3A6A8C;
 	text-decoration: none;
-
-	&:visited {
-		color: #743A8C;
-	}
 }
 
 code {

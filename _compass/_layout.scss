@@ -1,7 +1,7 @@
 $size-names: normal, thin, flow, tiny;
-$size-upper-limit: 10000px, 1020px, 760px, 400px;
-$size-page-width: 960px, 700px, auto;
-$size-column-width: 290px, 210px, 100%;
+$size-upper-limit: 10000px, 1140px, 880px, 680px;
+$size-page-width: 1125px, 865px, auto, auto;
+$size-column-width: 150px, 115px, 100%;
 $size-gutter-width: 45px, 35px, 0px;
 
 @function upper-limit($size) {
@@ -70,7 +70,7 @@ $size-gutter-width: 45px, 35px, 0px;
 	}
 }
 
-@for $i from 1 through 3 {
+@for $i from 1 through 6 {
 	.column-#{$i} {
 		@include column;
 		width: column-width-n(normal, $i);
@@ -91,7 +91,7 @@ $size-gutter-width: 45px, 35px, 0px;
 	}
 }
 
-@for $i from 1 through 2 {
+@for $i from 1 through 5 {
 	.offset-#{$i} {
 		margin-left: column-offset(normal, $i);
 

@@ -60,32 +60,30 @@ document.addEventListener('DOMContentLoaded', function() {
 			</script>
 			<section>
 				<div class="row">
-					<h1 class="column-3">{{ page.sample.title }}</h1>
+					<h1 class="column-6">{{ page.sample.title }}</h1>
 				</div>
 				<div class="row">
 					<div class="column-3">
 						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
 					</div>
-				</div>
-				<div class="row">
-					<div class="column-2">
+					<div class="column-3">
 						{{ page.sample | sample_description }}
+						<section class="sample-info">
+							<h1>Sample info</h1>
+							<h2>Contributors</h2>
+							<ul class="contributors">
+	{% for contributor in page.sample.contributors %}
+								<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
+	{% endfor %}
+							</ul>
+							<h2>Source</h2>
+							<p><a href="#">Fork this sample on GitHub</a></p>
+							<h2>Last Updated</h2>
+							<p>{{ page.sample.modified_date | date_to_long_string }}</p>
+	{% if site.environment == 'production' %}
+							<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="rectangle"></ins>
+	{% endif %}
+						</section>
 					</div>
-					<section class="column-1 sample-info">
-						<h1>Sample info</h1>
-						<h2>Contributors</h2>
-						<ul class="contributors">
-{% for contributor in page.sample.contributors %}
-							<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
-{% endfor %}
-						</ul>
-						<h2>Source</h2>
-						<p><a href="#">Fork this sample on GitHub</a></p>
-						<h2>Last Updated</h2>
-						<p>{{ page.sample.modified_date | date_to_long_string }}</p>
-{% if site.environment == 'production' %}
-						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="rectangle"></ins>
-{% endif %}
-					</section>
 				</div>
 			</section>

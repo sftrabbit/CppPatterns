@@ -60,13 +60,13 @@ document.addEventListener('DOMContentLoaded', function() {
 			</script>
 			<section class="sample">
 				<div class="row">
-					<h1 class="column-6">{{ page.sample.title }}</h1>
+					<h1 class="column-4">{{ page.sample.title }}</h1>
 				</div>
 				<div class="row">
-					<div class="column-3">
+					<div class="column-2">
 						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
 					</div>
-					<div class="column-3">
+					<div class="column-2">
 						<h2>Intent</h2>
 						{{ page.sample | sample_intent }}
 						<h2>Description</h2>

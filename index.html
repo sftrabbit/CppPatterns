@@ -5,11 +5,11 @@ layout: default
 {% for category in page.sample_categories %}
 {% assign outerloop = forloop %}
 				<div class="row">
-					<h1 class="column-6">{{ category[0].title }}</h1>
+					<h1 class="column-4">{{ category[0].title }}</h1>
 				</div>
 				<div class="row">
 {% for section in category[1] %}
-					<section class="column-2">
+					<section class="column-1">
 						<h1>{{ section[0].title }}</h1>
 						<ul class="samples">
 {% for sample in section[1] %}
@@ -21,7 +21,7 @@ layout: default
 						</ul>
 					</section>
 				{% assign groupname = outerloop.index %}
-				{% cycle groupname: '', '', '</div><div class="row">' %}
+				{% cycle groupname: '', '', '', '</div><div class="row">' %}
 {% endfor %}
 				</div>
 {% endfor %}

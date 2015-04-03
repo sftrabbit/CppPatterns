@@ -210,7 +210,7 @@ module CppSamples
 	end
 
 	def self.collect_samples(dir)
-		sample_file_names = Dir.glob("#{dir}/*.cpp")
+		sample_file_names = Dir.glob("#{dir}/*.cpp").sort
 		sample_file_names.inject([]) do |samples, sample_file_name|
 			samples << Sample.new(sample_file_name)
 		end

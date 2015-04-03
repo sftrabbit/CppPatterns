@@ -35,6 +35,7 @@ module CppSamples
 			read_yaml(File.join(@base, ''), '_sample.html')
 
 			self.data['sample'] = sample
+			self.data['title'] = sample.title
 		end
 	end
 
@@ -54,7 +55,7 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :path, :code_offset
+		attr_accessor :path, :code_offset, :title
 
 		def initialize(sample_file_name)
 			sample_file = File.new(sample_file_name, 'r')

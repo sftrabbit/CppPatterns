@@ -13,6 +13,7 @@ module CppSamples
 			samples_tree = CppSamples::build_samples_tree(samples_dir)
 
 			index.data['sample_categories'] = samples_tree
+			index.data['random_sample'] = CppSamples::get_random_sample(samples_tree)
 
 			samples_tree.each do |category, sections|
 				sections.each do |section, samples|
@@ -233,5 +234,18 @@ module CppSamples
 		sample_file_names.inject([]) do |samples, sample_file_name|
 			samples << Sample.new(sample_file_name, user_cache)
 		end
+	end
+
+	def self.get_random_sample(samples_tree)
+		all_samples = []
+
+		samples_tree.each do |_, sections|
+			sections.each do |_, samples|
+				all_samples.concat(samples)
+			end
+		end
+
+		seed = Time.now.strftime("%U%Y").to_i 
+		all_samples.sample(random: Random.new(seed))
 	end
 end

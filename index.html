@@ -1,6 +1,26 @@
 ---
 layout: default
 ---
+
+			<section class="sample featured">
+				<div class="row">
+					<h1 class="column-4">Featured sample: <a href="#">{{ page.random_sample.title }}</a></h1>
+				</div>
+				<div class="row">
+					<div class="column-2">
+						<a href="{{ site.baseurl }}{{ page.random_sample.path}}.html">
+							{% codeblock cpp %}{{ page.random_sample.code }}{% endcodeblock %}
+						</a>
+					</div>
+					<div class="column-2">
+						<h2>Intent</h2>
+						{{ page.random_sample | sample_intent }}
+						<h2>Description</h2>
+						{{ page.random_sample | sample_description | truncatewords: 35 }}
+						<p><a href="{{ site.baseurl }}{{ page.random_sample.path}}.html">Continue reading →</a></p>
+					</div>
+				</div>
+			</section>
 			<section>
 {% for category in page.sample_categories %}
 {% assign outerloop = forloop %}

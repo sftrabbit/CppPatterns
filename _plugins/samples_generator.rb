@@ -94,6 +94,7 @@ module CppSamples
 			file_name_parts = file_name.split('/')[-3..-1]
 			file_name_parts[2] = File.basename(file_name_parts[2], '.*')
 			file_name_parts[0].slice!(/^\d+\-/)
+			file_name_parts.delete_at(1)
 			file_name_parts.join('/')
 		end
 

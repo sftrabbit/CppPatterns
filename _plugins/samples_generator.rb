@@ -24,6 +24,33 @@ module CppSamples
 		end
 	end
 
+	GithubUser = Struct.new(:avatar, :profile)
+
+	class GithubUserCache
+		def initialize
+			@cache = {}
+		end
+
+		def get_user(email)
+			if @cache.has_key?(email)
+				return @cache[email]
+			end
+
+			search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
+			search_response = Net::HTTP.get_response(search_uri)
+			search_result = JSON.parse(search_response.body)
+
+			if search_result['items'].empty?
+				user = GithubUser.new('/images/unknown_user.png', nil)
+			else
+				user_item = search_result['items'][0]
+				user = GithubUser.new(user_item['avatar_url'] + '&size=36', user_item['html_url'])
+			end
+
+			@cache[email] = user
+		end
+	end
+
 	class SamplePage < Jekyll::Page
 		def initialize(site, sample)
 			@site = site
@@ -57,7 +84,9 @@ module CppSamples
 	class Sample
 		attr_accessor :path, :code_offset, :title
 
-		def initialize(sample_file_name)
+		def initialize(sample_file_name, user_cache)
+			@user_cache = user_cache
+
 			sample_file = File.new(sample_file_name, 'r')
 
 			@path = file_name_to_path(sample_file_name)
@@ -154,27 +183,13 @@ module CppSamples
 			contributors = []
 
 			committers.each do |committer|
-				search_uri = URI.parse("https://api.github.com/search/users?q=#{committer['email']}+in:email&per_page=1")
-				search_response = Net::HTTP.get_response(search_uri)
-				search_result = JSON.parse(search_response.body)
+				user = @user_cache.get_user(committer['email'])
 
-				if search_result['items'].empty?
-					contributor = {
-						'name' => committer['name'],
-						'image' => '/images/unknown_user.png',
-						'url' => nil
-					}
-				else
-					user = search_result['items'][0]
-
-					contributor = {
-						'name' => committer['name'],
-						'image' => user['avatar_url'] + '&size=36',
-						'url' => user['html_url']
-					}
-				end
-
-				contributors << contributor
+				contributors << {
+					'name' => committer['name'],
+					'image' => user.avatar,
+					'url' => user.profile
+				}
 			end
 
 			contributors
@@ -191,11 +206,13 @@ module CppSamples
 	def self.build_samples_tree(samples_dir)
 		sections = build_dir(samples_dir)
 
+		user_cache = GithubUserCache.new
+
 		sections.inject({}) do |tree, section|
 			categories = build_dir(section.path)
 
 			tree[section] = categories.inject({}) do |tree_section, category|
-				tree_section[category] = collect_samples(category.path)
+				tree_section[category] = collect_samples(category.path, user_cache)
 				tree_section
 			end
 
@@ -211,10 +228,10 @@ module CppSamples
 		end
 	end
 
-	def self.collect_samples(dir)
+	def self.collect_samples(dir, user_cache)
 		sample_file_names = Dir.glob("#{dir}/*.cpp").sort
 		sample_file_names.inject([]) do |samples, sample_file_name|
-			samples << Sample.new(sample_file_name)
+			samples << Sample.new(sample_file_name, user_cache)
 		end
 	end
 end

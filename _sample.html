@@ -68,6 +68,9 @@ document.addEventListener('DOMContentLoaded', function() {
 				<div class="row">
 					<div class="column-2">
 						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
+{% if site.environment == 'production' %}
+						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
+{% endif %}
 					</div>
 					<div class="column-2">
 						<h2>Intent</h2>
@@ -84,9 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
 						<p><a href="#">Fork this sample on GitHub</a></p>
 						<h2>Last Updated</h2>
 						<p>{{ page.sample.modified_date | date_to_long_string }}</p>
-	{% if site.environment == 'production' %}
-						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="rectangle"></ins>
-	{% endif %}
 					</div>
 				</div>
 				<div class="row">

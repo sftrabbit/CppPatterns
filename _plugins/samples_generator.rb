@@ -64,6 +64,7 @@ module CppSamples
 
 			self.data['sample'] = sample
 			self.data['title'] = sample.title
+			self.data['description'] = sample.intent
 		end
 	end
 
@@ -83,7 +84,7 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :file_name, :path, :code_offset, :title
+		attr_accessor :file_name, :path, :code_offset, :title, :intent
 
 		def initialize(sample_file_name, user_cache)
 			@user_cache = user_cache

@@ -1,5 +1,5 @@
 environment: development
-baseurl: /
+baseurl: 
 highlighter: pygments
 exclude: ['README.md', 'LICENSE.txt', 'Gemfile']
 gems:

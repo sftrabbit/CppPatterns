@@ -5,11 +5,11 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 
 			<section class="sample featured">
 				<div class="row">
-					<h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}{{ page.random_sample.path}}.html">{{ page.random_sample.title }}</a></h1>
+					<h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">{{ page.random_sample.title }}</a></h1>
 				</div>
 				<div class="row">
 					<div class="column-2">
-						<a href="{{ site.baseurl }}{{ page.random_sample.path}}.html">
+						<a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">
 							{% codeblock cpp %}{{ page.random_sample.code }}{% endcodeblock %}
 						</a>
 					</div>
@@ -18,7 +18,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 						{{ page.random_sample | sample_intent }}
 						<h2>Description</h2>
 						{{ page.random_sample | sample_description | truncatewords: 35 }}
-						<p><a href="{{ site.baseurl }}{{ page.random_sample.path}}.html">Continue reading →</a></p>
+						<p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
 					</div>
 				</div>
 			</section>
@@ -42,7 +42,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 						<ul class="samples">
 {% for sample in section[1] %}
 							<li>
-								<h1><a href="{{ site.baseurl }}{{ sample.path }}.html">{{ sample.title }}</a></h1>
+								<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
 								{{ sample | sample_intent }}
 							</li>
 {% endfor %}

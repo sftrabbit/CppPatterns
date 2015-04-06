@@ -1,5 +1,5 @@
 environment: production
-baseurl: /
+baseurl: http://cppsamples.com
 highlighter: pygments
 exclude: ['README.md', 'LICENSE.txt', 'Gemfile']
 gems:

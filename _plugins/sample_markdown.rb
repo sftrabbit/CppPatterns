@@ -26,7 +26,7 @@ module CppSamples
 
 			text.gsub!(/\[!(\d+)\]/) do |match|
 				line_num = $1.to_i - code_offset
-				CppSamples::generate_lineref_html(false, line_num)
+				CppSamples::generate_lineref_html(true, line_num)
 			end
 
 			text.gsub!(/\[(\d+)\-(\d+)\]/) do |match|

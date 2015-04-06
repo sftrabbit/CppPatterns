@@ -253,7 +253,7 @@ module CppSamples
 			end
 		end
 
-		seed = Time.now.strftime("%U%Y").to_i 
+		seed = Time.now.strftime("%U%Y").to_i + 5
 		all_samples.sample(random: Random.new(seed))
 	end
 end

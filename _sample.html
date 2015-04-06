@@ -77,20 +77,30 @@ document.addEventListener('DOMContentLoaded', function() {
 						{{ page.sample | sample_intent }}
 						<h2>Description</h2>
 						{{ page.sample | sample_description }}
-						<h2>Share</h2>
-						<p><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
-						<p><a href="https://twitter.com/share" class="twitter-share-button" data-via="sftrabbit" data-dnt="true">Tweet</a></p>
-						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					</div>
+				</div>
+				<div class="row">
+					<div class="column-1">
+						<h2>Source</h2>
+						<p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ page.sample.file_name }}">Fork this sample on GitHub</a></p>
+					</div>
+					<div class="column-1">
+						<h2>Last Updated</h2>
+						<p>{{ page.sample.modified_date | date_to_long_string }}</p>
+					</div>
+					<div class="column-1">
 						<h2>Contributors</h2>
 						<ul class="contributors">
 	{% for contributor in page.sample.contributors %}
 							<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
 	{% endfor %}
 						</ul>
-						<h2>Last Updated</h2>
-						<p>{{ page.sample.modified_date | date_to_long_string }}</p>
-						<h2>Source</h2>
-						<p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ page.sample.file_name }}">Fork this sample on GitHub</a></p>
+					</div>
+					<div class="column-1">
+						<h2>Share</h2>
+						<p><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
+						<p><a href="https://twitter.com/share" class="twitter-share-button" data-via="sftrabbit" data-dnt="true">Tweet</a></p>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
 					</div>
 				</div>
 				<div class="row">

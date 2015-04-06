@@ -83,13 +83,14 @@ module CppSamples
 	end
 
 	class Sample
-		attr_accessor :path, :code_offset, :title
+		attr_accessor :file_name, :path, :code_offset, :title
 
 		def initialize(sample_file_name, user_cache)
 			@user_cache = user_cache
 
 			sample_file = File.new(sample_file_name, 'r')
 
+			@file_name = get_file_name(sample_file_name)
 			@path = file_name_to_path(sample_file_name)
 
 			sample_contents = strip_blank_lines(sample_file.readlines)
@@ -116,8 +117,14 @@ module CppSamples
 				'intent' => @intent,
 				'contributors' => @contributors,
 				'modified_date' => @modified_date,
-				'path' => @path
+				'path' => @path,
+				'file_name' => @file_name
 			}
+		end
+
+		private def get_file_name(full_file_name)
+			file_name_parts = full_file_name.split('/')[-3..-1]
+			file_name_parts.join('/')
 		end
 
 		private def file_name_to_path(file_name)

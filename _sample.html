@@ -68,9 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
 				<div class="row">
 					<div class="column-2">
 						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
-{% if site.environment == 'production' %}
-						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
-{% endif %}
 					</div>
 					<div class="column-2">
 						<h2>Intent</h2>
@@ -115,6 +112,9 @@ var disqus_shortname = 'cppsamples';
 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 						</script>
+{% if site.environment == 'production' %}
+						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
+{% endif %}
 					</div>
 				</div>
 			</section>

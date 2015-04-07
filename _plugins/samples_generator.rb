@@ -207,7 +207,7 @@ module CppSamples
 		private def get_modified_date(file_name)
 			real_path = file_name.split('/')[-3..-1].join('/')
 			Dir.chdir('_samples') do
-				`git log -1 --format="format:%ad" -- #{@real_path}`.strip
+				`git log -1 --format="format:%ad" -- #{real_path}`.strip
 			end
 		end
 	end

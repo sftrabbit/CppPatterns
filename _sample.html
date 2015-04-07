@@ -83,14 +83,8 @@ document.addEventListener('DOMContentLoaded', function() {
 									<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
 {% endfor %}
 								</ul>
-							</div>
-							<div class="column-1">
 								<h2>Last Updated</h2>
 								<p>{{ page.sample.modified_date | date_to_long_string }}</p>
-							</div>
-						</div>
-						<div class="subrow">
-							<div class="column-1">
 								<h2>Source</h2>
 								<p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ page.sample.file_name }}">Fork this sample on GitHub</a></p>
 							</div>

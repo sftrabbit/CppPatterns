@@ -58,6 +58,18 @@ $size-gutter-width: 45px, 35px, 0px;
 	}
 }
 
+.subrow {
+	@include clearfix;
+	margin-left: (-(gutter-width(normal)));
+
+	@media (max-width: upper-limit(thin)) {
+		margin-left: -(gutter-width(thin));
+	}
+	@media (max-width: upper-limit(flow)) {
+		margin-left: -(gutter-width(flow));
+	}
+}
+
 @mixin column {
 	float: left;
 	margin-left: gutter-width(normal);
@@ -81,7 +93,7 @@ $size-gutter-width: 45px, 35px, 0px;
 
 		@media (max-width: upper-limit(flow)) {
 			@include clearfix;
-			margin-bottom: 3.5em;
+			margin-bottom: 1.5em;
 			width: column-width-n(flow, $i);
 
 			&:last-child {

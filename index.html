@@ -17,6 +17,13 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 						<h2>Intent</h2>
 						{{ page.random_sample | sample_intent }}
 						<h2>Description</h2>
+{% if page.random_sample.tags.size > 0 %}
+						<ul class="tags">
+{% for tag in page.random_sample.tags %}
+							<li class="{{ tag }}">{{ tag }}</li>
+{% endfor %}
+						</ul>
+{% endif %}
 						{{ page.random_sample | sample_description | truncatewords: 35 }}
 						<p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
 					</div>

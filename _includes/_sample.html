@@ -105,6 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						</div>
 					</div>
 				</div>
+{% if site.environment == 'production' %}
 				<div class="row">
 					<div class="column-4">
 						<div id="disqus_thread"></div>
@@ -117,9 +118,8 @@ var disqus_shortname = 'cppsamples';
 	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
 						</script>
-{% if site.environment == 'production' %}
 						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
-{% endif %}
 					</div>
 				</div>
+{% endif %}
 			</section>

@@ -60,7 +60,7 @@ module CppSamples
 			@name = "#{File.basename(sample.path)}.html"
 
 			process(@name)
-			read_yaml(File.join(@base, ''), '_sample.html')
+			read_yaml(File.join(@base, '_includes', ''), '_sample.html')
 
 			self.data['sample'] = sample
 			self.data['title'] = sample.title

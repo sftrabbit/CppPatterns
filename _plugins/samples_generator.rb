@@ -97,11 +97,15 @@ module CppSamples
 			sample_contents = strip_blank_lines(sample_file.readlines)
 
 			@title = extract_title(sample_contents)
+			@tags = extract_tags(sample_contents)
+
+			code_start = 1
+			code_start = 2 unless @tags.empty?
 
 			body_lines, body_start = extract_body(sample_contents)
 			@intent, @description = extract_body_parts(body_lines)
 
-			code_lines = strip_blank_lines(sample_contents[1..body_start-1])
+			code_lines = strip_blank_lines(sample_contents[code_start..body_start-1])
 			@code = code_lines.join
 			@code_offset = sample_contents.index(code_lines[0])
 
@@ -112,6 +116,7 @@ module CppSamples
 		def to_liquid
 			{
 				'title' => @title,
+				'tags' => @tags,
 				'code' => @code,
 				'code_offset' => @code_offset,
 				'description' => @description,
@@ -145,6 +150,21 @@ module CppSamples
 			end
 
 			header_match[1]
+		end
+
+		private def extract_tags(lines)
+			tags_line = lines[1]
+			tags_line_match = COMMENT_REGEX.match(tags_line)
+
+			unless tags_line_match
+				return []
+			end
+
+			tags_text = tags_line_match[1]
+			tags = tags_text.split(/\s*,\s*/)
+			tags.collect! {|tag| tag.strip.downcase}
+
+			return tags
 		end
 
 		private def extract_body(lines)

@@ -43,6 +43,13 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 {% for sample in section[1] %}
 							<li>
 								<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
+{% if sample.tags.size > 0 %}
+								<ul class="tags">
+{% for tag in sample.tags %}
+									<li class="{{ tag }}">{{ tag }}</li>
+{% endfor %}
+								</ul>
+{% endif %}
 								{{ sample | sample_intent }}
 							</li>
 {% endfor %}

@@ -62,6 +62,10 @@ ul.samples {
 	li {
 		margin-bottom: 24px;
 	}
+
+	.tags li {
+		margin-bottom: 2px;
+	}
 	
 	li h1 {
 		font-family: 'Roboto';
@@ -74,6 +78,28 @@ ul.samples {
 		margin: 4px 0;
 		font-size: 14px;
 		color: #777;
+	}
+}
+
+.tags {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+
+	li {
+		display: inline-block;
+		padding: 2px 3px;
+		margin: 0 2px 0 0;
+		font-size: 13px;
+		line-height: 1em;
+		color: #587E28;
+		border: 1px solid #587E28;
+		border-radius: 3px;
+
+		&.experimental {
+			color: #d53e3e;
+			border: 1px solid #d53e3e;
+		}
 	}
 }
 
@@ -157,6 +183,10 @@ ol {
 		text-transform: uppercase;
 		font-size: 12px;
 		color: #666;
+	}
+
+	.tags {
+		margin-bottom: 13px;
 	}
 
 	.contributors {

@@ -1,8 +1,6 @@
 *.lock
 /pkg
 
-_samples
-
 _site
 _build
 .sass-cache

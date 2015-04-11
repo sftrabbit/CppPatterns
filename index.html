@@ -42,29 +42,25 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 				<div class="row">
 					<h1 class="column-4">{{ category[0].title }}</h1>
 				</div>
-				<div class="row">
 {% for section in category[1] %}
-					<section class="column-1">
-						<h1>{{ section[0].title }}</h1>
-						<ul class="samples">
+				<section class="row">
+					<h1 class="column-4">{{ section[0].title }}</h1>
+					<ul class="samples">
 {% for sample in section[1] %}
-							<li>
-								<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
+						<li class="column-1">
+							<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
 {% if sample.tags.size > 0 %}
-								<ul class="tags">
+							<ul class="tags">
 {% for tag in sample.tags %}
-									<li class="{{ tag }}">{{ tag }}</li>
+								<li class="{{ tag }}">{{ tag }}</li>
 {% endfor %}
-								</ul>
+							</ul>
 {% endif %}
-								{{ sample | sample_intent }}
-							</li>
+							{{ sample | sample_intent }}
+						</li>
 {% endfor %}
-						</ul>
-					</section>
-				{% assign groupname = outerloop.index %}
-				{% cycle groupname: '', '', '', '</div><div class="row">' %}
+					</ul>
+				</section>
 {% endfor %}
-				</div>
 {% endfor %}
 			</section>

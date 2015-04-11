@@ -1,0 +1,14 @@
+git clone https://github.com/sftrabbit/CppSamples.git build
+cd build
+
+git config user.name $GIT_NAME
+git config user.email $GIT_EMAIL
+
+rm -r !(CNAME)
+cp -r ../_site/* .
+
+git add -A
+timestamp="$(date +"%Y%m%d%H%M%S")"
+git commit -m "Build $timestamp"
+
+git push -q "https://${GH_TOKEN}@github.com/sftrabbit/CppSamples.git" gh-pages

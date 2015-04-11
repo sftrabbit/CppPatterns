@@ -4,8 +4,9 @@ cd build
 git config user.name $GIT_NAME
 git config user.email $GIT_EMAIL
 
-rm -r !(CNAME)
+rm -r *
 cp -r ../_site/* .
+echo "www.cppsamples.com" > CNAME
 
 git add -A
 timestamp="$(date +"%Y%m%d%H%M%S")"

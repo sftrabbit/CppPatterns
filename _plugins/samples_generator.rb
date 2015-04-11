@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 
 module CppSamples
-	DEFAULT_SAMPLES_DIR = '_samples'
+	DEFAULT_SAMPLES_DIR = 'samples'
 	COMMENT_REGEX = /^\/\/\s*(.+)?$/
 
 	class SamplesGenerator < Jekyll::Generator

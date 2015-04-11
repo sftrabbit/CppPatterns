@@ -4,4 +4,7 @@ rvm:
 branches:
   only:
   - release
+env:
+  - secure: "B6e6oFgsyuThzo6Z2rGJrOegnpk84C1v3v3Gh047ppBhOOanrkxzY6d0WpNjdXTzEg7RSL5NyjMAj2HsW6jVSm0DbpG6thajYhGyPgJbM1iut/O5Ehd1VlI6itLrbaiE/4PwFYENnP8DG6hPXOhQGTw1vmGS+w6dY8rU860c5QE="
 script: ./scripts/build
+after_success: ./scripts/deploy

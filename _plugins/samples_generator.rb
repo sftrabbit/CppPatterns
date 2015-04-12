@@ -30,6 +30,8 @@ module CppSamples
 	class GithubUserCache
 		def initialize
 			@cache = {}
+
+			@github_token = ENV['GH_TOKEN']
 		end
 
 		def get_user(email)
@@ -37,9 +39,32 @@ module CppSamples
 				return @cache[email]
 			end
 
-			search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
-			search_response = Net::HTTP.get_response(search_uri)
-			search_result = JSON.parse(search_response.body)
+			while true
+				search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
+
+				if @github_token.nil? or @github_token.empty?
+					search_response = Net::HTTP.get_response(search_uri)
+				else
+					search_request = Net::HTTP::Get.new(search_uri)
+					search_request.basic_auth(ENV['GH_TOKEN'], 'x-oauth-basic')
+					search_response = Net::HTTP.start(search_uri.hostname,
+					                                  search_uri.port,
+					                                  :use_ssl => true) do |http|
+						http.request(search_request)
+					end
+				end
+
+				search_result = JSON.parse(search_response.body)
+
+				puts search_response['X-RateLimit-Remaining']
+
+				break if search_result.has_key?('items')
+
+				rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i
+				while Time.now.to_i < rate_limit_reset_timestamp
+					sleep(30)
+				end
+			end
 
 			if search_result['items'].empty?
 				user = GithubUser.new('/images/unknown_user.png', nil)

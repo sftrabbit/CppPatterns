@@ -56,8 +56,6 @@ module CppSamples
 
 				search_result = JSON.parse(search_response.body)
 
-				puts search_response['X-RateLimit-Remaining']
-
 				break if search_result.has_key?('items')
 
 				rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i

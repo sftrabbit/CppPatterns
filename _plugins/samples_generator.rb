@@ -10,7 +10,7 @@ module CppSamples
 			index = site.pages.detect { |page| page.url == '/index.html' }
 
 			samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
-			samples_tree = CppSamples::build_samples_tree(samples_dir)
+			samples_tree = CppSamples::build_samples_tree(site, samples_dir)
 
 			index.data['sample_categories'] = samples_tree
 			index.data['random_sample'] = CppSamples::get_random_sample(samples_tree)
@@ -72,6 +72,12 @@ module CppSamples
 			end
 
 			@cache[email] = user
+		end
+	end
+
+	class DummyUserCache
+		def get_user(email)
+			GithubUser.new('/images/unknown_user.png', nil)
 		end
 	end
 
@@ -255,10 +261,14 @@ module CppSamples
 		end
 	end
 
-	def self.build_samples_tree(samples_dir)
+	def self.build_samples_tree(site, samples_dir)
 		sections = build_dir(samples_dir)
 
-		user_cache = GithubUserCache.new
+		if site.config['environment'] == "production"
+			user_cache = GithubUserCache.new
+		else
+			user_cache = DummyUserCache.new
+		end
 
 		sections.inject({}) do |tree, section|
 			categories = build_dir(section.path)

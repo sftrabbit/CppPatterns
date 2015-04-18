@@ -164,6 +164,13 @@ strong, b {
 	font-weight: bold;
 }
 
+sup {
+	font-size: 10px;
+	vertical-align: baseline;
+	position: relative;
+	top: -0.6em;
+}
+
 ul, ol {
 	padding-left: 1.5em;
 	margin-bottom: 1em;

@@ -36,31 +36,34 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 				</div>
 			</div>
 {% endif %}
-			<section>
+			<section class="samples-index">
 {% for category in page.sample_categories %}
-{% assign outerloop = forloop %}
 				<div class="row">
 					<h1 class="column-4">{{ category[0].title }}</h1>
 				</div>
-{% for section in category[1] %}
-				<section class="row">
-					<h1 class="column-4">{{ section[0].title }}</h1>
-					<ul class="samples">
-{% for sample in section[1] %}
-						<li class="column-1">
+	{% for section in category[1] %}
+		{% assign groupname = forloop.index %}
+				<section class="samples-section">
+					<div class="samples-section-header row">
+						<h1 class="column-4">{{ section[0].title }}</h1>
+					</div>
+					<div class="row">
+		{% for sample in section[1] %}
+						<div class="index-item column-1">
 							<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
-{% if sample.tags.size > 0 %}
+			{% if sample.tags.size > 0 %}
 							<ul class="tags">
-{% for tag in sample.tags %}
+				{% for tag in sample.tags %}
 								<li class="{{ tag }}">{{ tag }}</li>
-{% endfor %}
+				{% endfor %}
 							</ul>
-{% endif %}
+			{% endif %}
 							{{ sample | sample_intent }}
-						</li>
-{% endfor %}
-					</ul>
+						</div>
+					{% cycle groupname: '', '', '', '</div><div class="row">' %}
+		{% endfor %}
+					</div>
 				</section>
-{% endfor %}
+	{% endfor %}
 {% endfor %}
 			</section>

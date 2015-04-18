@@ -5,8 +5,7 @@
 @import 'syntax';
 
 body {
-	font-family: 'Roboto';
-	font-size: 15px;
+	font-family: 'Roboto'; font-size: 15px;
 	line-height: 1.4em;
 }
 
@@ -55,29 +54,42 @@ section section h1 {
 	margin-bottom: 16px;
 }
 
-ul.samples {
-	list-style-type: none;
-	padding: 0;
+.samples-index {
+	.row {
+		padding-bottom: 1em 0;
+	}
 
-	li {
-		margin-bottom: 24px;
+	section .row {
+		padding: 0;
+	}
+
+	.samples-section {
+		margin-bottom: 1.5em;
+	}
+
+	.samples-section-header {
+		margin-bottom: 0.2em;
+	}
+
+	.index-item {
+		margin-bottom: 1.2em;
+		
+		h1 {
+			font-family: 'Roboto';
+			font-size: 14px;
+			border-bottom: none;
+			margin-bottom: 5px;
+		}
+		
+		p {
+			margin: 4px 0;
+			font-size: 14px;
+			color: #777;
+		}
 	}
 
 	.tags li {
 		margin-bottom: 2px;
-	}
-	
-	li h1 {
-		font-family: 'Roboto';
-		font-size: 14px;
-		border-bottom: none;
-		margin-bottom: 5px;
-	}
-	
-	li p {
-		margin: 4px 0;
-		font-size: 14px;
-		color: #777;
 	}
 }
 
@@ -162,6 +174,13 @@ em, i {
 
 strong, b {
 	font-weight: bold;
+}
+
+sup {
+	font-size: 10px;
+	vertical-align: baseline;
+	position: relative;
+	top: -0.6em;
 }
 
 ul, ol {

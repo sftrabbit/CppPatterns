@@ -2,7 +2,7 @@ require 'net/http'
 require 'uri'
 
 module CppSamples
-	DEFAULT_SAMPLES_DIR = '_samples'
+	DEFAULT_SAMPLES_DIR = 'samples'
 	COMMENT_REGEX = /^\/\/\s*(.+)?$/
 
 	class SamplesGenerator < Jekyll::Generator
@@ -10,7 +10,7 @@ module CppSamples
 			index = site.pages.detect { |page| page.url == '/index.html' }
 
 			samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
-			samples_tree = CppSamples::build_samples_tree(samples_dir)
+			samples_tree = CppSamples::build_samples_tree(site, samples_dir)
 
 			index.data['sample_categories'] = samples_tree
 			index.data['random_sample'] = CppSamples::get_random_sample(samples_tree)
@@ -30,6 +30,8 @@ module CppSamples
 	class GithubUserCache
 		def initialize
 			@cache = {}
+
+			@github_token = ENV['GH_TOKEN']
 		end
 
 		def get_user(email)
@@ -37,9 +39,30 @@ module CppSamples
 				return @cache[email]
 			end
 
-			search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
-			search_response = Net::HTTP.get_response(search_uri)
-			search_result = JSON.parse(search_response.body)
+			while true
+				search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
+
+				if @github_token.nil? or @github_token.empty?
+					search_response = Net::HTTP.get_response(search_uri)
+				else
+					search_request = Net::HTTP::Get.new(search_uri)
+					search_request.basic_auth(ENV['GH_TOKEN'], 'x-oauth-basic')
+					search_response = Net::HTTP.start(search_uri.hostname,
+					                                  search_uri.port,
+					                                  :use_ssl => true) do |http|
+						http.request(search_request)
+					end
+				end
+
+				search_result = JSON.parse(search_response.body)
+
+				break if search_result.has_key?('items')
+
+				rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i
+				while Time.now.to_i < rate_limit_reset_timestamp
+					sleep(30)
+				end
+			end
 
 			if search_result['items'].empty?
 				user = GithubUser.new('/images/unknown_user.png', nil)
@@ -49,6 +72,12 @@ module CppSamples
 			end
 
 			@cache[email] = user
+		end
+	end
+
+	class DummyUserCache
+		def get_user(email)
+			GithubUser.new('/images/unknown_user.png', nil)
 		end
 	end
 
@@ -198,8 +227,8 @@ module CppSamples
 			real_path = file_name.split('/')[-3..-1].join('/')
 
 			committers = nil
-			Dir.chdir('_samples') do
-				gitlog_output = `git log --follow --format="format:%ae %an" -- #{real_path}`
+			Dir.chdir('samples') do
+				gitlog_output = `git log --follow --simplify-merges --format="format:%ae %an" -- #{real_path}`
 				committer_strings = gitlog_output.split("\n")
 				committers = committer_strings.inject([]) do |committers, committer_string|
 					split_committer_string = committer_string.split(/\s/,2)
@@ -226,16 +255,20 @@ module CppSamples
 
 		private def get_modified_date(file_name)
 			real_path = file_name.split('/')[-3..-1].join('/')
-			Dir.chdir('_samples') do
+			Dir.chdir('samples') do
 				`git log -1 --format="format:%ad" -- #{real_path}`.strip
 			end
 		end
 	end
 
-	def self.build_samples_tree(samples_dir)
+	def self.build_samples_tree(site, samples_dir)
 		sections = build_dir(samples_dir)
 
-		user_cache = GithubUserCache.new
+		if site.config['environment'] == "production"
+			user_cache = GithubUserCache.new
+		else
+			user_cache = DummyUserCache.new
+		end
 
 		sections.inject({}) do |tree, section|
 			categories = build_dir(section.path)

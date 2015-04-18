@@ -1,4 +1,4 @@
-[submodule "_samples"]
-	path = _samples
-	url = git://github.com/sftrabbit/CppSamples-Samples.git
+[submodule "samples"]
+	path = samples
+	url = https://github.com/sftrabbit/CppSamples-Samples.git
 	branch = release

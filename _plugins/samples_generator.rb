@@ -228,7 +228,7 @@ module CppSamples
 
 			committers = nil
 			Dir.chdir('samples') do
-				gitlog_output = `git log --follow --format="format:%ae %an" -- #{real_path}`
+				gitlog_output = `git log --follow --simplify-merges --format="format:%ae %an" -- #{real_path}`
 				committer_strings = gitlog_output.split("\n")
 				committers = committer_strings.inject([]) do |committers, committer_string|
 					split_committer_string = committer_string.split(/\s/,2)

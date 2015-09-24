@@ -28,6 +28,11 @@ body > header {
 			padding-top: 10px;
 		}
 	}
+
+	svg {
+		fill: #fff;
+		pointer-events: none;
+	}
 }
 
 body > footer {
@@ -57,10 +62,10 @@ body > header h1 span {
 		top: 9px;
 		left: 10px;
 		width: 24px;
-		fill: #fff;
 	}
 
 	input {
+		box-sizing: border-box;
 		width: 100%;
 		height: 40px;
 		padding: 0 12px 0 40px;
@@ -70,6 +75,20 @@ body > header h1 span {
 		outline: 0;
 		color: #fff;
 		font-size: 14px;
+	}
+}
+
+.social {
+	text-align: right;
+
+	a {
+		display: inline-block;
+	}
+
+	svg {
+		margin-top: 5px;
+		width: 28px;
+		height: 28px;
 	}
 }
 

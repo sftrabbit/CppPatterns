@@ -76,7 +76,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 			<script>
 function filterSamples(event) {
-	var query = $('#search').val().toLowerCase();
+	var query = $('#search').val();
 
 	if (query.length > 0) {
 		$('.featured').fadeOut(200);
@@ -87,9 +87,9 @@ function filterSamples(event) {
 		$("#results").empty();
 
 		var matchingItems = $('.index-item').filter(function() {
-			var content = $(this).text().toLowerCase();
+			var content = $(this).text();
 
-			return content.indexOf(query) != -1;
+			return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
 		}).clone();
 
 		var rows = [];
@@ -113,10 +113,18 @@ function filterSamples(event) {
 			$('.samples-index').fadeIn(200);
 		});
 	}
+
+	history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
 }
 
 function clearSearch() {
 	$('#search').val('');
+	filterSamples();
+}
+
+function onHashChange() {
+	var match = window.location.hash.match(/^#\/search\/(.*)$/);
+	$('#search').val(match[1]);
 	filterSamples();
 }
 
@@ -128,5 +136,15 @@ $(function() {
 				clearSearch();
 			}
 		});
+
+	var currentState = history.state;
+	if (currentState && currentState.query) {
+		$('#search').val(currentState.query);
+		filterSamples();
+	} else if (window.location.hash) {
+		onHashChange();
+	}
+
+	$(window).on('hashchange', onHashChange);
 });
 			</script>

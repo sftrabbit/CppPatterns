@@ -118,7 +118,7 @@ section section h1 {
 	margin-bottom: 16px;
 }
 
-.samples-index {
+.samples-index, .search-results {
 	.row {
 		padding-bottom: 1em 0;
 	}
@@ -155,6 +155,10 @@ section section h1 {
 	.tags li {
 		margin-bottom: 2px;
 	}
+}
+
+.search-results {
+	display: none;
 }
 
 .tags {

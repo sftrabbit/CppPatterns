@@ -133,3 +133,9 @@ $size-gutter-width: 45px, 35px, 0px;
 		margin: 0 30px;
 	}
 }
+
+.flow-hide {
+	@media (max-width: upper-limit(flow)) {
+		display: none;
+	}
+}

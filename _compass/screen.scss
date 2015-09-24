@@ -56,6 +56,10 @@ body > header h1 span {
 .search {
 	position: relative;
 
+	@media (max-width: upper-limit(flow)) {
+		margin-bottom: 0;
+	}
+
 	svg {
 		float: left;
 		position: absolute;

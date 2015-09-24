@@ -115,7 +115,18 @@ function filterSamples(event) {
 	}
 }
 
+function clearSearch() {
+	$('#search').val('');
+	filterSamples();
+}
+
 $(function() {
-	$('#search').on('input', filterSamples);
+	$('#search')
+		.on('input', filterSamples)
+		.keyup(function(event) {
+			if (event.keyCode == 27) {
+				clearSearch();
+			}
+		});
 });
 			</script>

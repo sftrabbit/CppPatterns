@@ -27,6 +27,12 @@ body > header {
 		&:first-child {
 			padding-top: 10px;
 		}
+
+		.column-1 {
+			@media (max-width: upper-limit(flow)) {
+				margin-bottom: 0;
+			}
+		}
 	}
 
 	svg {
@@ -57,6 +63,7 @@ body > header h1 span {
 	position: relative;
 
 	@media (max-width: upper-limit(flow)) {
+		margin-top: 8px;
 		margin-bottom: 0;
 	}
 

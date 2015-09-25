@@ -168,16 +168,19 @@ section section h1 {
 
 	li {
 		display: inline-block;
-		padding: 3px 4px;
 		margin: 0 2px 0 0;
-		font-size: 13px;
-		line-height: 1em;
-		color: #fff;
 		background-color: #73B322;
 		border-radius: 2px;
 
 		&.experimental {
 			background-color: #E42727;
+		}
+
+		a {
+			padding: 3px 4px;
+			color: #fff;
+			font-size: 13px;
+			line-height: 1em;
 		}
 	}
 }

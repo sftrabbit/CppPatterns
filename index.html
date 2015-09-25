@@ -54,7 +54,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 			{% if sample.tags.size > 0 %}
 							<ul class="tags">
 				{% for tag in sample.tags %}
-								<li class="{{ tag }}">{{ tag }}</li>
+								<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 				{% endfor %}
 							</ul>
 			{% endif %}
@@ -69,7 +69,10 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 			</section>
 			<section class="search-results">
 				<div class="row">
-					<h1 class="column-4">Search Results</h1>
+					<div class="column-4">
+						<a href="{{ site.baseurl }}/">← All samples</a>
+						<h1>Search Results</h1>
+					</div>
 				</div>
 				<section id="results" class="samples-section"></div>
 			</section>

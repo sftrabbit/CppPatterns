@@ -20,7 +20,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 {% if page.random_sample.tags.size > 0 %}
 						<ul class="tags">
 {% for tag in page.random_sample.tags %}
-							<li class="{{ tag }}">{{ tag }}</li>
+							<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 {% endfor %}
 						</ul>
 {% endif %}

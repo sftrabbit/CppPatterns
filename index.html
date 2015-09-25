@@ -107,14 +107,16 @@ function filterSamples(event) {
 		}
 
 		$("#results").append(rows);
+
+		history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
 	} else {
 		$('.search-results').fadeOut(200, function() {
 			$('.featured').fadeIn(200);
 			$('.samples-index').fadeIn(200);
 		});
-	}
 
-	history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
+		history.replaceState({}, '', '/');
+	}
 }
 
 function clearSearch() {

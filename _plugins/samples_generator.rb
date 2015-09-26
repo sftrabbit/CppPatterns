@@ -25,16 +25,17 @@ module CppSamples
 		end
 	end
 
-	GithubUser = Struct.new(:avatar, :profile)
+	GithubUser = Struct.new(:username, :avatar, :profile)
 
 	class GithubUserCache
 		def initialize
 			@cache = {}
+			@usernames_cache = {}
 
 			@github_token = ENV['GH_TOKEN']
 		end
 
-		def get_user(email)
+		def get_user_by_email(email)
 			if @cache.has_key?(email)
 				return @cache[email]
 			end
@@ -65,19 +66,71 @@ module CppSamples
 			end
 
 			if search_result['items'].empty?
-				user = GithubUser.new('/images/unknown_user.png', nil)
+				user = GithubUser.new(nil, '/images/unknown_user.png', nil)
 			else
 				user_item = search_result['items'][0]
-				user = GithubUser.new(user_item['avatar_url'] + '&size=36', user_item['html_url'])
+				user = GithubUser.new(user_item['login'], user_item['avatar_url'] + '&size=36', user_item['html_url'])
 			end
 
 			@cache[email] = user
+			if !user.username.nil?
+				@usernames_cache[user.username] = user
+			end
+
+			user
+		end
+
+		def get_user_by_username(username)
+			if @usernames_cache.has_key?(username)
+				return @usernames_cache[username]
+			end
+
+			while true
+				user_uri = URI.parse("https://api.github.com/users/#{username}")
+
+				if @github_token.nil? or @github_token.empty?
+					user_response = Net::HTTP.get_response(user_uri)
+				else
+					user_request = Net::HTTP::Get.new(user_uri)
+					user_request.basic_auth(ENV['GH_TOKEN'], 'x-oauth-basic')
+					user_response = Net::HTTP.start(user_uri.hostname,
+					                                user_uri.port,
+					                                :use_ssl => true) do |http|
+						http.request(user_request)
+					end
+				end
+
+				user_result = JSON.parse(user_response.body)
+
+				break if user_result.has_key?('login') or
+				         user_result['message'] == "Not Found"
+
+				rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i
+				while Time.now.to_i < rate_limit_reset_timestamp
+					sleep(30)
+				end
+			end
+
+			if user_result.has_key?('login')
+				user = GithubUser.new(username, user_result['avatar_url'] + '&size=36', user_result['html_url'])
+			else
+				user = GithubUser.new(username, '/images/unknown_user.png', nil)
+			end
+
+			@usernames_cache[username] = user
+			if user_result.has_key?('email')
+				@cache[user_result['email']] = user
+			end
 		end
 	end
 
 	class DummyUserCache
-		def get_user(email)
-			GithubUser.new('/images/unknown_user.png', nil)
+		def get_user_by_email(email)
+			GithubUser.new(nil, '/images/unknown_user.png', nil)
+		end
+
+		def get_user_by_username(username)
+			GithubUser.new(nil, '/images/unknown_user.png', nil)
 		end
 	end
 
@@ -115,7 +168,7 @@ module CppSamples
 	class Sample
 		attr_accessor :file_name, :path, :code_offset, :title, :intent
 
-		def initialize(sample_file_name, user_cache)
+		def initialize(sample_file_name, user_cache, contributors_list)
 			@user_cache = user_cache
 
 			sample_file = File.new(sample_file_name, 'r')
@@ -138,7 +191,7 @@ module CppSamples
 			@code = code_lines.join
 			@code_offset = sample_contents.index(code_lines[0])
 
-			@contributors = get_contributors(sample_file_name)
+			@contributors = get_contributors(sample_file_name, contributors_list)
 			@modified_date = get_modified_date(sample_file_name)
 		end
 
@@ -223,7 +276,7 @@ module CppSamples
 			lines.join("").strip.split("\n").map {|line| "#{line}\n" }
 		end
 
-		private def get_contributors(file_name)
+		private def get_contributors(file_name, contributors_list)
 			real_path = file_name.split('/')[-3..-1].join('/')
 
 			committers = nil
@@ -241,7 +294,18 @@ module CppSamples
 			contributors = []
 
 			committers.each do |committer|
-				user = @user_cache.get_user(committer['email'])
+				contributors_item = contributors_list.detect do |contributors_item|
+					contributors_item['name'] == committer['name'] or
+					contributors_item['email'] == committer['email']
+				end
+
+				unless contributors_item.nil?
+					user = @user_cache.get_user_by_username(contributors_item['github_username'])
+				end
+
+				if user.nil? or user.username.nil?
+					user = @user_cache.get_user_by_email(committer['email'])
+				end
 
 				contributors << {
 					'name' => committer['name'],
@@ -270,11 +334,21 @@ module CppSamples
 			user_cache = DummyUserCache.new
 		end
 
+		contributors_list = []
+		File.open('samples/CONTRIBUTORS.txt', 'r').each_line do |line|
+			match = /^\- ([^<>]*) (<(.*)> )?\((.*)\)\s*$/.match(line)
+			contributors_list << {
+				'name' => match[1],
+				'email' => match[3],
+				'github_username' => match[4]
+			}
+		end
+
 		sections.inject({}) do |tree, section|
 			categories = build_dir(section.path)
 
 			tree[section] = categories.inject({}) do |tree_section, category|
-				tree_section[category] = collect_samples(category.path, user_cache)
+				tree_section[category] = collect_samples(category.path, user_cache, contributors_list)
 				tree_section
 			end
 
@@ -290,10 +364,10 @@ module CppSamples
 		end
 	end
 
-	def self.collect_samples(dir, user_cache)
+	def self.collect_samples(dir, user_cache, contributors_list)
 		sample_file_names = Dir.glob("#{dir}/*.cpp").sort
 		sample_file_names.inject([]) do |samples, sample_file_name|
-			samples << Sample.new(sample_file_name, user_cache)
+			samples << Sample.new(sample_file_name, user_cache, contributors_list)
 		end
 	end
 

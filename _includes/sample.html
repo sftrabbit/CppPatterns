@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
 {% if page.sample.tags.size > 0 %}
 						<ul class="tags">
 {% for tag in page.sample.tags %}
-							<li class="{{ tag }}">{{ tag }}</li>
+							<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 {% endfor %}
 						</ul>
 {% endif %}

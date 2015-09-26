@@ -20,7 +20,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 {% if page.random_sample.tags.size > 0 %}
 						<ul class="tags">
 {% for tag in page.random_sample.tags %}
-							<li class="{{ tag }}">{{ tag }}</li>
+							<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 {% endfor %}
 						</ul>
 {% endif %}
@@ -54,7 +54,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 			{% if sample.tags.size > 0 %}
 							<ul class="tags">
 				{% for tag in sample.tags %}
-								<li class="{{ tag }}">{{ tag }}</li>
+								<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 				{% endfor %}
 							</ul>
 			{% endif %}
@@ -67,3 +67,89 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 	{% endfor %}
 {% endfor %}
 			</section>
+			<section class="search-results">
+				<div class="row">
+					<div class="column-4">
+						<a href="{{ site.baseurl }}/">← All samples</a>
+						<h1>Search Results</h1>
+					</div>
+				</div>
+				<section id="results" class="samples-section"></div>
+			</section>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+			<script>
+function filterSamples(event) {
+	var query = $('#search').val();
+
+	if (query.length > 0) {
+		$('.featured').fadeOut(200);
+		$('.samples-index').fadeOut(200, function() {
+			$('.search-results').fadeIn(200);
+		});
+
+		$("#results").empty();
+
+		var matchingItems = $('.index-item').filter(function() {
+			var content = $(this).text();
+
+			return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
+		}).clone();
+
+		var rows = [];
+
+		if (matchingItems.length > 0) {
+			matchingItems.each(function(index) {
+				if (index % 4 == 0) {
+					rows.push($('<div class="row"></div>'));
+				}
+
+				rows[rows.length - 1].append($(this));
+			});
+		} else {
+			rows.push($('<div class="row"><div class="column-4"><p>No samples found matching your query.</p></div></div>'));
+		}
+
+		$("#results").append(rows);
+
+		history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
+	} else {
+		$('.search-results').fadeOut(200, function() {
+			$('.featured').fadeIn(200);
+			$('.samples-index').fadeIn(200);
+		});
+
+		history.replaceState({}, '', '/');
+	}
+}
+
+function clearSearch() {
+	$('#search').val('');
+	filterSamples();
+}
+
+function onHashChange() {
+	var match = window.location.hash.match(/^#\/search\/(.*)$/);
+	$('#search').val(match[1]);
+	filterSamples();
+}
+
+$(function() {
+	$('#search')
+		.on('input', filterSamples)
+		.keyup(function(event) {
+			if (event.keyCode == 27) {
+				clearSearch();
+			}
+		});
+
+	var currentState = history.state;
+	if (currentState && currentState.query) {
+		$('#search').val(currentState.query);
+		filterSamples();
+	} else if (window.location.hash) {
+		onHashChange();
+	}
+
+	$(window).on('hashchange', onHashChange);
+});
+			</script>

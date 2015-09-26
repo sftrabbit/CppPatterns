@@ -9,14 +9,14 @@ module CppSamples
 			code_lines = code.split("\n")
 			code_lines.map! do |line|
 				line_num += 1
-				line_nums += "#{line_num}\n"
+				line_nums += "<span>#{line_num}</span>"
 				"<span class=\"codeline\" id=\"line#{line_num}\">#{line}</span>"
 			end
 			code = code_lines.join("\n")
 
 			output = '<table class="codeblock"><tr>'
-			output += "<td class=\"linenums\"><pre><code>#{line_nums}</code></pre></td>"
-			output += "<td class=\"code highlight\"><pre><code class=\"cpp\">#{code}</code></pre></td>"
+			output += "<td class=\"linenums\"><code>#{line_nums}</code></td>"
+			output += "<td class=\"code highlight\"><code class=\"cpp\">#{code}</code></td>"
 			output += '</tr></table>'
 		end
 	end

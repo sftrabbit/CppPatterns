@@ -194,11 +194,6 @@ code {
 	font-family: 'Ubuntu Mono';
 }
 
-pre {
-	tab-size: 2;
-	-moz-tab-size: 2;
-}
-
 .codeblock {
 	display: block;
 	background-color: #2c2c2c;
@@ -225,7 +220,9 @@ pre {
 		.codeline {
 			display: block;
 			width: 100%;
-			white-space: nowrap;
+			white-space: pre;
+			tab-size: 2;
+			-moz-tab-size: 2;
 
 			&:before {
 				content: "\200B";

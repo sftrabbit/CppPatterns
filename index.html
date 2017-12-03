@@ -3,153 +3,153 @@ layout: default
 description: A repository of modern and idiomatic C++ code samples curated by the community.
 ---
 
-			<section class="sample featured">
-				<div class="row">
-					<h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">{{ page.random_sample.title }}</a></h1>
-				</div>
-				<div class="row">
-					<div class="column-2">
-						<a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">
-							{% codeblock cpp %}{{ page.random_sample.code }}{% endcodeblock %}
-						</a>
-					</div>
-					<div class="column-2">
-						<h2>Intent</h2>
-						{{ page.random_sample | sample_intent }}
-						<h2>Description</h2>
+      <section class="sample featured">
+        <div class="row">
+          <h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">{{ page.random_sample.title }}</a></h1>
+        </div>
+        <div class="row">
+          <div class="column-2">
+            <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">
+              {% codeblock cpp %}{{ page.random_sample.code }}{% endcodeblock %}
+            </a>
+          </div>
+          <div class="column-2">
+            <h2>Intent</h2>
+            {{ page.random_sample | sample_intent }}
+            <h2>Description</h2>
 {% if page.random_sample.tags.size > 0 %}
-						<ul class="tags">
+            <ul class="tags">
 {% for tag in page.random_sample.tags %}
-							<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
+              <li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
 {% endfor %}
-						</ul>
+            </ul>
 {% endif %}
-						{{ page.random_sample | sample_description | truncatewords: 35 }}
-						<p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
-					</div>
-				</div>
-			</section>
+            {{ page.random_sample | sample_description | truncatewords: 35 }}
+            <p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
+          </div>
+        </div>
+      </section>
 {% if site.environment == 'production' %}
-			<div class="row">
-				<div class="column-4">
-					<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="4105099934" data-ad-format="auto"></ins>
-				</div>
-			</div>
+      <div class="row">
+        <div class="column-4">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="4105099934" data-ad-format="auto"></ins>
+        </div>
+      </div>
 {% endif %}
-			<section class="samples-index">
+      <section class="samples-index">
 {% for category in page.sample_categories %}
-				<div class="row">
-					<h1 class="column-4">{{ category[0].title }}</h1>
-				</div>
-	{% for section in category[1] %}
-		{% assign groupname = forloop.index %}
-				<section class="samples-section">
-					<div class="samples-section-header row">
-						<h1 class="column-4">{{ section[0].title }}</h1>
-					</div>
-					<div class="row">
-		{% for sample in section[1] %}
-						<div class="index-item column-1">
-							<h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
-			{% if sample.tags.size > 0 %}
-							<ul class="tags">
-				{% for tag in sample.tags %}
-								<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
-				{% endfor %}
-							</ul>
-			{% endif %}
-							{{ sample | sample_intent }}
-						</div>
-					{% cycle groupname: '', '', '', '</div><div class="row">' %}
-		{% endfor %}
-					</div>
-				</section>
-	{% endfor %}
+        <div class="row">
+          <h1 class="column-4">{{ category[0].title }}</h1>
+        </div>
+  {% for section in category[1] %}
+    {% assign groupname = forloop.index %}
+        <section class="samples-section">
+          <div class="samples-section-header row">
+            <h1 class="column-4">{{ section[0].title }}</h1>
+          </div>
+          <div class="row">
+    {% for sample in section[1] %}
+            <div class="index-item column-1">
+              <h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
+      {% if sample.tags.size > 0 %}
+              <ul class="tags">
+        {% for tag in sample.tags %}
+                <li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
+        {% endfor %}
+              </ul>
+      {% endif %}
+              {{ sample | sample_intent }}
+            </div>
+          {% cycle groupname: '', '', '', '</div><div class="row">' %}
+    {% endfor %}
+          </div>
+        </section>
+  {% endfor %}
 {% endfor %}
-			</section>
-			<section class="search-results">
-				<div class="row">
-					<div class="column-4">
-						<a href="{{ site.baseurl }}/">← All samples</a>
-						<h1>Search Results</h1>
-					</div>
-				</div>
-				<section id="results" class="samples-section"></div>
-			</section>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-			<script>
+      </section>
+      <section class="search-results">
+        <div class="row">
+          <div class="column-4">
+            <a href="{{ site.baseurl }}/">← All samples</a>
+            <h1>Search Results</h1>
+          </div>
+        </div>
+        <section id="results" class="samples-section"></div>
+      </section>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script>
 function filterSamples(event) {
-	var query = $('#search').val();
+  var query = $('#search').val();
 
-	if (query.length > 0) {
-		$('.featured').fadeOut(200);
-		$('.samples-index').fadeOut(200, function() {
-			$('.search-results').fadeIn(200);
-		});
+  if (query.length > 0) {
+    $('.featured').fadeOut(200);
+    $('.samples-index').fadeOut(200, function() {
+      $('.search-results').fadeIn(200);
+    });
 
-		$("#results").empty();
+    $("#results").empty();
 
-		var matchingItems = $('.index-item').filter(function() {
-			var content = $(this).text();
+    var matchingItems = $('.index-item').filter(function() {
+      var content = $(this).text();
 
-			return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
-		}).clone();
+      return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
+    }).clone();
 
-		var rows = [];
+    var rows = [];
 
-		if (matchingItems.length > 0) {
-			matchingItems.each(function(index) {
-				if (index % 4 == 0) {
-					rows.push($('<div class="row"></div>'));
-				}
+    if (matchingItems.length > 0) {
+      matchingItems.each(function(index) {
+        if (index % 4 == 0) {
+          rows.push($('<div class="row"></div>'));
+        }
 
-				rows[rows.length - 1].append($(this));
-			});
-		} else {
-			rows.push($('<div class="row"><div class="column-4"><p>No samples found matching your query.</p></div></div>'));
-		}
+        rows[rows.length - 1].append($(this));
+      });
+    } else {
+      rows.push($('<div class="row"><div class="column-4"><p>No samples found matching your query.</p></div></div>'));
+    }
 
-		$("#results").append(rows);
+    $("#results").append(rows);
 
-		history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
-	} else {
-		$('.search-results').fadeOut(200, function() {
-			$('.featured').fadeIn(200);
-			$('.samples-index').fadeIn(200);
-		});
+    history.replaceState({query: query}, '', '/#/search/' + encodeURIComponent(query));
+  } else {
+    $('.search-results').fadeOut(200, function() {
+      $('.featured').fadeIn(200);
+      $('.samples-index').fadeIn(200);
+    });
 
-		history.replaceState({}, '', '/');
-	}
+    history.replaceState({}, '', '/');
+  }
 }
 
 function clearSearch() {
-	$('#search').val('');
-	filterSamples();
+  $('#search').val('');
+  filterSamples();
 }
 
 function onHashChange() {
-	var match = window.location.hash.match(/^#\/search\/(.*)$/);
-	$('#search').val(match[1]);
-	filterSamples();
+  var match = window.location.hash.match(/^#\/search\/(.*)$/);
+  $('#search').val(match[1]);
+  filterSamples();
 }
 
 $(function() {
-	$('#search')
-		.on('input', filterSamples)
-		.keyup(function(event) {
-			if (event.keyCode == 27) {
-				clearSearch();
-			}
-		});
+  $('#search')
+    .on('input', filterSamples)
+    .keyup(function(event) {
+      if (event.keyCode == 27) {
+        clearSearch();
+      }
+    });
 
-	var currentState = history.state;
-	if (currentState && currentState.query) {
-		$('#search').val(currentState.query);
-		filterSamples();
-	} else if (window.location.hash) {
-		onHashChange();
-	}
+  var currentState = history.state;
+  if (currentState && currentState.query) {
+    $('#search').val(currentState.query);
+    filterSamples();
+  } else if (window.location.hash) {
+    onHashChange();
+  }
 
-	$(window).on('hashchange', onHashChange);
+  $(window).on('hashchange', onHashChange);
 });
-			</script>
+      </script>

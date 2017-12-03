@@ -7,7 +7,7 @@ module CppSamples
 
 	class SamplesGenerator < Jekyll::Generator
 		def generate(site)
-			index = site.pages.detect { |page| page.url == '/index.html' }
+			index = site.pages.detect { |page| page.name == 'index.html' }
 
 			samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
 			samples_tree = CppSamples::build_samples_tree(site, samples_dir)

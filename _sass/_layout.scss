@@ -1,3 +1,11 @@
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
 $size-names: normal, thin, flow, tiny;
 $size-upper-limit: 10000px, 1140px, 880px, 680px;
 $size-page-width: 1135px, 865px, auto, auto;

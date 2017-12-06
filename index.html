@@ -95,7 +95,7 @@ function filterSamples(event) {
     $("#results").empty();
 
     var matchingItems = $('.index-item').filter(function() {
-      var content = $(this).text();
+      var content = $(this).children('h1').text() + ' ' + $(this).children('p').text();
 
       return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
     }).clone();

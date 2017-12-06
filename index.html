@@ -94,10 +94,16 @@ function filterSamples(event) {
 
     $("#results").empty();
 
-    var matchingItems = $('.index-item').filter(function() {
-      var content = $(this).children('h1').text() + ' ' + $(this).children('p').text();
+    const words = query.split(/[ ,]+/).map(function(word) {
+      return word.toLowerCase()
+    });
 
-      return content.toLowerCase().indexOf(query.toLowerCase()) != -1;
+    var matchingItems = $('.index-item').filter(function() {
+      var content = ($(this).children('h1').text() + ' ' + $(this).children('p').text()).toLowerCase();
+
+      return words.every(function(word) {
+        return content.indexOf(word) != -1;
+      })
     }).clone();
 
     var rows = [];

@@ -25,7 +25,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 {% if page.random_sample.tags.size > 0 %}
   {% assign min_spec_tag = page.random_sample.tags[0] %}
             <div class="min-spec">
-              <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
+              <span class="tag {{ min_spec_tag }}"><a href="/#/search/tag:{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
               {% if min_spec_tag != 'experimental' %}or newer{% endif %}
             </div>
 {% endif %}
@@ -59,7 +59,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
       {% if sample.tags.size > 0 %}
         {% assign min_spec_tag = sample.tags[0] %}
               <div class="min-spec">
-                <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
+                <span class="tag {{ min_spec_tag }}"><a href="/#/search/tag:{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
                 {% if min_spec_tag != 'experimental' %}or newer{% endif %}
               </div>
       {% endif %}
@@ -94,16 +94,30 @@ function filterSamples(event) {
 
     $("#results").empty();
 
-    const words = query.split(/[ ,]+/).map(function(word) {
-      return word.toLowerCase()
-    });
+    var tags = []
+
+    var words = query.split(/[ ,]+/).reduce(function(words, word) {
+      if (word.startsWith('tag:')) {
+        tags.push(word.slice(4))
+      } else {
+        words.push(word.toLowerCase())
+      }
+      return words
+    }, []);
 
     var matchingItems = $('.index-item').filter(function() {
       var content = ($(this).children('h1').text() + ' ' + $(this).children('p').text()).toLowerCase();
+      var tagContent = $(this).find('.tag').text();
 
-      return words.every(function(word) {
+      var wordsMatch = words.every(function(word) {
         return content.indexOf(word) != -1;
       })
+
+      var tagsMatch = tags.every(function(tag) {
+        return tag >= tagContent;
+      })
+
+      return wordsMatch && tagsMatch;
     }).clone();
 
     var rows = [];

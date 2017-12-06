@@ -23,11 +23,11 @@ description: A repository of modern and idiomatic C++ code samples curated by th
             {{ page.random_sample | sample_intent }}
             <h2>Description</h2>
 {% if page.random_sample.tags.size > 0 %}
-            <ul class="tags">
-{% for tag in page.random_sample.tags %}
-              <li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
-{% endfor %}
-            </ul>
+  {% assign min_spec_tag = page.random_sample.tags[0] %}
+            <div class="min-spec">
+              <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
+              {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+            </div>
 {% endif %}
             {{ page.random_sample | sample_description | truncatewords: 35 }}
             <p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
@@ -57,11 +57,11 @@ description: A repository of modern and idiomatic C++ code samples curated by th
             <div class="index-item column-1">
               <h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
       {% if sample.tags.size > 0 %}
-              <ul class="tags">
-        {% for tag in sample.tags %}
-                <li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
-        {% endfor %}
-              </ul>
+        {% assign min_spec_tag = sample.tags[0] %}
+              <div class="min-spec">
+                <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
+                {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+              </div>
       {% endif %}
               {{ sample | sample_intent }}
             </div>

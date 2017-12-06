@@ -75,11 +75,11 @@ document.addEventListener('DOMContentLoaded', function() {
             {{ page.sample | sample_intent }}
             <h2>Description</h2>
 {% if page.sample.tags.size > 0 %}
-            <ul class="tags">
-{% for tag in page.sample.tags %}
-              <li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
-{% endfor %}
-            </ul>
+  {% assign min_spec_tag = page.sample.tags[0] %}
+            <div class="min-spec">
+              <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
+              {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+            </div>
 {% endif %}
             {{ page.sample | sample_description }}
             <div class="subrow">

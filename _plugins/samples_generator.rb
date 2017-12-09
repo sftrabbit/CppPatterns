@@ -1,5 +1,6 @@
 require 'net/http'
 require 'uri'
+require 'yaml'
 
 module CppSamples
   DEFAULT_SAMPLES_DIR = 'samples'
@@ -151,17 +152,14 @@ module CppSamples
   end
 
   class Section
-    attr_accessor :title, :path
+    attr_accessor :title
 
-    def initialize(title_file_name)
-      @path = File.dirname(title_file_name)
-
-      title_file = File.new(title_file_name, 'r')
-      @title = title_file.readline.chomp
+    def initialize(title)
+      @title = title
     end
 
     def to_liquid
-      return {'title' => @title, 'path' => @path}
+      return {'title' => @title}
     end
   end
 
@@ -326,8 +324,6 @@ module CppSamples
   end
 
   def self.build_samples_tree(site, samples_dir)
-    sections = build_dir(samples_dir)
-
     if site.config['environment'] == "production"
       user_cache = GithubUserCache.new
     else
@@ -335,7 +331,7 @@ module CppSamples
     end
 
     contributors_list = []
-    File.open('samples/CONTRIBUTORS.txt', 'r').each_line do |line|
+    File.open("#{samples_dir}/CONTRIBUTORS.txt", 'r').each_line do |line|
       match = /^\- ([^<>]*) (<(.*)> )?\((.*)\)\s*$/.match(line)
       contributors_list << {
         'name' => match[1],
@@ -344,30 +340,18 @@ module CppSamples
       }
     end
 
-    sections.inject({}) do |tree, section|
-      categories = build_dir(section.path)
+    contents = YAML.load_file("#{samples_dir}/contents.yml")
 
-      tree[section] = categories.inject({}) do |tree_section, category|
-        tree_section[category] = collect_samples(category.path, user_cache, contributors_list)
-        tree_section
+    contents['categories'].each_with_object({}) do |category, tree|
+      tree[Section.new(category['title'])] = category['sections'].each_with_object({}) do |section, tree_category|
+        tree_category[Section.new(section['title'])] = section['samples'].map do |sample_path|
+          sample_file_name = "#{samples_dir}/#{sample_path}.cpp"
+          Sample.new(sample_file_name, user_cache, contributors_list)
+        end
+        tree_category
       end
 
       tree
-    end
-  end
-
-  def self.build_dir(dir)
-    subdir_title_file_names = Dir.glob("#{dir}/*/TITLE").sort
-
-    subdir_title_file_names.inject([]) do |sections, subdir_title_file_name|
-      sections << Section.new(subdir_title_file_name)
-    end
-  end
-
-  def self.collect_samples(dir, user_cache, contributors_list)
-    sample_file_names = Dir.glob("#{dir}/*.cpp").sort
-    sample_file_names.inject([]) do |samples, sample_file_name|
-      samples << Sample.new(sample_file_name, user_cache, contributors_list)
     end
   end
 

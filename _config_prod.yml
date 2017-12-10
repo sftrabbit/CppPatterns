@@ -1,4 +1,4 @@
 environment: production
-baseurl: https://www.cpppatterns.com
+baseurl: https://cpppatterns.com
 highlighter: pygments
 exclude: ['README.md', 'LICENSE.txt', 'Gemfile', 'scripts', 'samples']

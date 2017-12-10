@@ -1,11 +1,11 @@
 ---
 layout: default
-description: A repository of modern and idiomatic C++ code samples curated by the community.
+description: A repository of modern and idiomatic C++ code patterns curated by the community.
 ---
 
       <section class="sample featured">
         <div class="row">
-          <h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">{{ page.random_sample.primary.title }}</a></h1>
+          <h1 class="column-4">Featured pattern: <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">{{ page.random_sample.primary.title }}</a></h1>
         </div>
         <div class="row">
           <div class="column-2">
@@ -19,15 +19,15 @@ description: A repository of modern and idiomatic C++ code samples curated by th
             </div>
           </div>
           <div class="column-2">
-            <h2>Intent</h2>
-            {{ page.random_sample.primary | sample_intent }}
-            <h2>Description</h2>
 {% assign min_spec = page.random_sample.min_spec %}
             <div class="min-spec">
               Requires
               <span class="tag {{ min_spec }}"><a href="/#/search/tag:{{ min_spec }}">{{ min_spec }}</a></span>
               {% if min_spec != 'experimental' %}or newer{% endif %}
             </div>
+            <h2>Intent</h2>
+            {{ page.random_sample.primary | sample_intent }}
+            <h2>Description</h2>
             {{ page.random_sample.primary | sample_description | truncatewords: 35 }}
             <p><a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">Continue reading →</a></p>
           </div>
@@ -73,7 +73,7 @@ description: A repository of modern and idiomatic C++ code samples curated by th
       <section class="search-results">
         <div class="row">
           <div class="column-4">
-            <a href="{{ site.baseurl }}/">← All samples</a>
+            <a href="{{ site.baseurl }}/">← All patterns</a>
             <h1>Search Results</h1>
           </div>
         </div>
@@ -131,7 +131,7 @@ function filterSamples(event) {
         rows[rows.length - 1].append($(this));
       });
     } else {
-      rows.push($('<div class="row"><div class="column-4"><p>No samples found matching your query.</p></div></div>'));
+      rows.push($('<div class="row"><div class="column-4"><p>No patterns found matching your query.</p></div></div>'));
     }
 
     $("#results").append(rows);

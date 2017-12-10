@@ -62,14 +62,14 @@ document.addEventListener('DOMContentLoaded', function() {
       <section class="sample">
         <div class="row">
           <div class="column-4">
-            <a href="{{ site.baseurl }}/">← Samples</a>
+            <a href="{{ site.baseurl }}/">← Patterns</a>
             <h1>{{ variation.title }}</h1>
           </div>
         </div>
         <div class="row variation {{ spec }}">
           <div class="column-2">
             {% codeblock cpp %}{{ variation.code }}{% endcodeblock %}
-            <p class="license">This sample is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication</a>.</p>
+            <p class="license">This pattern is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication</a>.</p>
           </div>
           <div class="column-2">
             <div class="min-spec">
@@ -107,12 +107,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 <h2>Last Updated</h2>
                 <p>{{ variation.modified_date | date_to_long_string }}</p>
                 <h2>Source</h2>
-                <p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ variation.file_name }}">Fork this sample on GitHub</a></p>
+                <p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ variation.file_name }}">Fork this pattern on GitHub</a></p>
               </div>
               <div class="column-1">
                 <h2>Share</h2>
                 <p><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
-                <p><a href="https://twitter.com/share" class="twitter-share-button" data-via="cppsamples" data-dnt="true">Tweet</a></p>
+                <p><a href="https://twitter.com/share" class="twitter-share-button" data-via="cpppatterns" data-dnt="true">Tweet</a></p>
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
                 <div class="g-plusone" data-size="medium"></div>
               </div>

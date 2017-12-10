@@ -112,7 +112,7 @@ module CppSamples
         break if user_result.has_key?('login') or
                  user_result['message'] == "Not Found"
 
-        rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i
+        rate_limit_reset_timestamp = user_response['X-RateLimit-Reset'].to_i
         while Time.now.to_i < rate_limit_reset_timestamp
           sleep(30)
         end

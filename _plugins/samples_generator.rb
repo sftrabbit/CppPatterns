@@ -22,12 +22,10 @@ module CppSamples
       index.data['sample_categories'] = samples_tree
       index.data['random_sample'] = CppSamples::get_random_sample(samples_tree)
 
-      samples_tree.each do |category, sections|
-        sections.each do |section, samples|
-          samples.each do |sample|
-            sample.variations.keys.each do |spec|
-              site.pages << SamplePage.new(site, sample, spec)
-            end
+      samples_tree.each do |category, samples|
+        samples.each do |sample|
+          sample.variations.keys.each do |spec|
+            site.pages << SamplePage.new(site, sample, spec)
           end
         end
       end
@@ -415,11 +413,8 @@ module CppSamples
     contents = YAML.load_file("#{samples_dir}/contents.yml")
 
     contents['categories'].each_with_object({}) do |category, tree|
-      tree[Section.new(category['title'])] = category['sections'].each_with_object({}) do |section, tree_category|
-        tree_category[Section.new(section['title'])] = section['samples'].map do |sample_path|
-          Sample.new(samples_dir, sample_path, user_cache, contributors_list)
-        end
-        tree_category
+      tree[Section.new(category['title'])] = category['samples'].map do |sample_path|
+        Sample.new(samples_dir, sample_path, user_cache, contributors_list)
       end
 
       tree
@@ -429,10 +424,8 @@ module CppSamples
   def self.get_random_sample(samples_tree)
     all_samples = []
 
-    samples_tree.each do |_, sections|
-      sections.each do |_, samples|
-        all_samples.concat(samples)
-      end
+    samples_tree.each do |_, samples|
+      all_samples.concat(samples)
     end
 
     seed = Time.now.strftime("%U%Y").to_i

@@ -41,21 +41,20 @@ description: A repository of modern and idiomatic C++ code patterns curated by t
       </div>
 {% endif %}
       <section class="samples-index">
-{% for category in page.sample_categories %}
         <div class="row">
-          <h1 class="column-4">{{ category[0].title }}</h1>
+          <h1 class="column-4">All patterns</h1>
         </div>
-  {% for section in category[1] %}
-    {% assign groupname = forloop.index %}
+{% for category in page.sample_categories %}
+  {% assign groupname = forloop.index %}
         <section class="samples-section">
           <div class="samples-section-header row">
-            <h1 class="column-4">{{ section[0].title }}</h1>
+            <h1 class="column-4">{{ category[0].title }}</h1>
           </div>
           <div class="row">
-    {% for sample in section[1] %}
+  {% for sample in category[1] %}
             <div class="index-item column-1">
               <h1><a href="{{ site.baseurl }}/samples/{{ sample.name }}.html">{{ sample.primary.title }}</a></h1>
-      {% assign min_spec = sample.min_spec %}
+    {% assign min_spec = sample.min_spec %}
               <div class="min-spec">
                 Requires
                 <span class="tag {{ min_spec }}"><a href="/#/search/tag:{{ min_spec }}">{{ min_spec }}</a></span>
@@ -64,10 +63,9 @@ description: A repository of modern and idiomatic C++ code patterns curated by t
               {{ sample.primary | sample_intent }}
             </div>
           {% cycle groupname: '', '', '', '</div><div class="row">' %}
-    {% endfor %}
+  {% endfor %}
           </div>
         </section>
-  {% endfor %}
 {% endfor %}
       </section>
       <section class="search-results">

@@ -145,14 +145,14 @@ module CppSamples
     def initialize(site, sample, spec)
       @site = site
       @base = site.source
-      @dir = "samples/#{File.dirname(sample.name)}"
+      @dir = "patterns"
 
       is_primary = spec == sample.primary_spec
 
       if is_primary
-        @name = "#{File.basename(sample.name)}.html"
+        @name = "#{sample.name}.html"
       else
-        @name = "#{File.basename(sample.name)}.#{spec}.html"
+        @name = "#{sample.name}.#{spec}.html"
       end
 
       process(@name)
@@ -183,7 +183,7 @@ module CppSamples
     attr_accessor :name, :variations
 
     def initialize(samples_dir, sample_name, user_cache, contributors_list)
-      @name = sample_name
+      @name = File.basename(sample_name)
       @user_cache = user_cache
 
       @variations = {}

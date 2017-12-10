@@ -83,9 +83,9 @@ document.addEventListener('DOMContentLoaded', function() {
       {% assign spec = variation_pairs[0] %}
       {% if spec != page.spec %}
         {% if spec == page.sample.primary_spec %}
-                <li><a href="{{ site.baseurl }}/samples/{{ page.sample.name }}.html">{{ spec }}</a></li>
+                <li><a href="{{ site.baseurl }}/patterns/{{ page.sample.name }}.html">{{ spec }}</a></li>
         {% else %}
-                <li><a href="{{ site.baseurl }}/samples/{{ page.sample.name }}.{{ spec }}.html">{{ spec }}</a></li>
+                <li><a href="{{ site.baseurl }}/patterns/{{ page.sample.name }}.{{ spec }}.html">{{ spec }}</a></li>
         {% endif %}
       {% endif %}
     {% endfor %}

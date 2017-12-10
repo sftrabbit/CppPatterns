@@ -5,15 +5,15 @@ description: A repository of modern and idiomatic C++ code patterns curated by t
 
       <section class="sample featured">
         <div class="row">
-          <h1 class="column-4">Featured pattern: <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">{{ page.random_sample.primary.title }}</a></h1>
+          <h1 class="column-4">Featured pattern: <a href="{{ site.baseurl }}/patterns/{{ page.random_sample.name }}.html">{{ page.random_sample.primary.title }}</a></h1>
         </div>
         <div class="row">
           <div class="column-2">
-            <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">
+            <a href="{{ site.baseurl }}/patterns/{{ page.random_sample.name }}.html">
               {% codeblock cpp %}{{ page.random_sample.primary.code }}{% endcodeblock %}
             </a>
             <div class="code-overlay">
-              <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html" class="code-overlay">
+              <a href="{{ site.baseurl }}/patterns/{{ page.random_sample.name }}.html" class="code-overlay">
                 Continue reading →
               </a>
             </div>
@@ -29,7 +29,7 @@ description: A repository of modern and idiomatic C++ code patterns curated by t
             {{ page.random_sample.primary | sample_intent }}
             <h2>Description</h2>
             {{ page.random_sample.primary | sample_description | truncatewords: 35 }}
-            <p><a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">Continue reading →</a></p>
+            <p><a href="{{ site.baseurl }}/patterns/{{ page.random_sample.name }}.html">Continue reading →</a></p>
           </div>
         </div>
       </section>
@@ -53,7 +53,7 @@ description: A repository of modern and idiomatic C++ code patterns curated by t
           <div class="row">
   {% for sample in category[1] %}
             <div class="index-item column-1">
-              <h1><a href="{{ site.baseurl }}/samples/{{ sample.name }}.html">{{ sample.primary.title }}</a></h1>
+              <h1><a href="{{ site.baseurl }}/patterns/{{ sample.name }}.html">{{ sample.primary.title }}</a></h1>
     {% assign min_spec = sample.min_spec %}
               <div class="min-spec">
                 Requires

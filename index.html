@@ -81,6 +81,8 @@ description: A repository of modern and idiomatic C++ code samples curated by th
       </section>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
       <script>
+var specs = ['{{ page.specs | join: "', '" }}']
+
 function filterSamples(event) {
   var query = $('#search').val();
 
@@ -112,7 +114,7 @@ function filterSamples(event) {
       })
 
       var tagsMatch = tags.every(function(tag) {
-        return tag >= tagContent;
+        return specs.indexOf(tag) >= specs.indexOf(tagContent);
       })
 
       return wordsMatch && tagsMatch;

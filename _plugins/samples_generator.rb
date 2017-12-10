@@ -18,6 +18,7 @@ module CppSamples
       samples_dir = site.config['samples_dir'] || DEFAULT_SAMPLES_DIR
       samples_tree = CppSamples::build_samples_tree(site, samples_dir)
 
+      index.data['specs'] = SPECS
       index.data['sample_categories'] = samples_tree
       index.data['random_sample'] = CppSamples::get_random_sample(samples_tree)
 

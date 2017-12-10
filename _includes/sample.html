@@ -58,42 +58,56 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 }, false);
       </script>
+{% assign variation = page.sample.variations[page.spec] %}
       <section class="sample">
         <div class="row">
           <div class="column-4">
             <a href="{{ site.baseurl }}/">← Samples</a>
-            <h1>{{ page.sample.title }}</h1>
+            <h1>{{ variation.title }}</h1>
           </div>
         </div>
-        <div class="row">
+        <div class="row variation {{ spec }}">
           <div class="column-2">
-            {% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
+            {% codeblock cpp %}{{ variation.code }}{% endcodeblock %}
             <p class="license">This sample is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication</a>.</p>
           </div>
           <div class="column-2">
-            <h2>Intent</h2>
-            {{ page.sample | sample_intent }}
-            <h2>Description</h2>
-{% if page.sample.tags.size > 0 %}
-  {% assign min_spec_tag = page.sample.tags[0] %}
             <div class="min-spec">
-              <span class="tag {{ min_spec_tag }}"><a href="/#/search/{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
-              {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+              Requires
+              <span class="tag {{ page.spec }}"><a href="/#/search/{{ page.spec }}">{{ page.spec }}</a></span>
+              {% if page.spec != 'experimental' %}or newer{% endif %}.
+  {% if page.sample.variations.size > 1 %}
+              Other versions:
+              <ul class="specs">
+    {% for variation_pairs in page.sample.variations %}
+      {% assign spec = variation_pairs[0] %}
+      {% if spec != page.spec %}
+        {% if spec == page.sample.primary_spec %}
+                <li><a href="{{ site.baseurl }}/samples/{{ page.sample.name }}.html">{{ spec }}</a></li>
+        {% else %}
+                <li><a href="{{ site.baseurl }}/samples/{{ page.sample.name }}.{{ spec }}.html">{{ spec }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+              </ul>
+  {% endif %}
             </div>
-{% endif %}
-            {{ page.sample | sample_description }}
+            <h2>Intent</h2>
+            {{ variation | sample_intent }}
+            <h2>Description</h2>
+            {{ variation | sample_description }}
             <div class="subrow">
               <div class="column-1">
                 <h2>Contributors</h2>
                 <ul class="contributors">
-{% for contributor in page.sample.contributors %}
+  {% for contributor in variation.contributors %}
                   <li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
-{% endfor %}
+  {% endfor %}
                 </ul>
                 <h2>Last Updated</h2>
-                <p>{{ page.sample.modified_date | date_to_long_string }}</p>
+                <p>{{ variation.modified_date | date_to_long_string }}</p>
                 <h2>Source</h2>
-                <p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ page.sample.file_name }}">Fork this sample on GitHub</a></p>
+                <p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ variation.file_name }}">Fork this sample on GitHub</a></p>
               </div>
               <div class="column-1">
                 <h2>Share</h2>

@@ -5,32 +5,31 @@ description: A repository of modern and idiomatic C++ code samples curated by th
 
       <section class="sample featured">
         <div class="row">
-          <h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">{{ page.random_sample.title }}</a></h1>
+          <h1 class="column-4">Featured sample: <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">{{ page.random_sample.primary.title }}</a></h1>
         </div>
         <div class="row">
           <div class="column-2">
-            <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">
-              {% codeblock cpp %}{{ page.random_sample.code }}{% endcodeblock %}
+            <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">
+              {% codeblock cpp %}{{ page.random_sample.primary.code }}{% endcodeblock %}
             </a>
             <div class="code-overlay">
-              <a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html" class="code-overlay">
+              <a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html" class="code-overlay">
                 Continue reading →
               </a>
             </div>
           </div>
           <div class="column-2">
             <h2>Intent</h2>
-            {{ page.random_sample | sample_intent }}
+            {{ page.random_sample.primary | sample_intent }}
             <h2>Description</h2>
-{% if page.random_sample.tags.size > 0 %}
-  {% assign min_spec_tag = page.random_sample.tags[0] %}
+{% assign min_spec = page.random_sample.min_spec %}
             <div class="min-spec">
-              <span class="tag {{ min_spec_tag }}"><a href="/#/search/tag:{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
-              {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+              Requires
+              <span class="tag {{ min_spec }}"><a href="/#/search/tag:{{ min_spec }}">{{ min_spec }}</a></span>
+              {% if min_spec != 'experimental' %}or newer{% endif %}
             </div>
-{% endif %}
-            {{ page.random_sample | sample_description | truncatewords: 35 }}
-            <p><a href="{{ site.baseurl }}/{{ page.random_sample.path}}.html">Continue reading →</a></p>
+            {{ page.random_sample.primary | sample_description | truncatewords: 35 }}
+            <p><a href="{{ site.baseurl }}/samples/{{ page.random_sample.name }}.html">Continue reading →</a></p>
           </div>
         </div>
       </section>
@@ -55,15 +54,14 @@ description: A repository of modern and idiomatic C++ code samples curated by th
           <div class="row">
     {% for sample in section[1] %}
             <div class="index-item column-1">
-              <h1><a href="{{ site.baseurl }}/{{ sample.path }}.html">{{ sample.title }}</a></h1>
-      {% if sample.tags.size > 0 %}
-        {% assign min_spec_tag = sample.tags[0] %}
+              <h1><a href="{{ site.baseurl }}/samples/{{ sample.name }}.html">{{ sample.primary.title }}</a></h1>
+      {% assign min_spec = sample.min_spec %}
               <div class="min-spec">
-                <span class="tag {{ min_spec_tag }}"><a href="/#/search/tag:{{ min_spec_tag }}">{{ min_spec_tag }}</a></span>
-                {% if min_spec_tag != 'experimental' %}or newer{% endif %}
+                Requires
+                <span class="tag {{ min_spec }}"><a href="/#/search/tag:{{ min_spec }}">{{ min_spec }}</a></span>
+                {% if min_spec != 'experimental' %}or newer{% endif %}
               </div>
-      {% endif %}
-              {{ sample | sample_intent }}
+              {{ sample.primary | sample_intent }}
             </div>
           {% cycle groupname: '', '', '', '</div><div class="row">' %}
     {% endfor %}

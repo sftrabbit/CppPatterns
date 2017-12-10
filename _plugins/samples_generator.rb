@@ -5,6 +5,11 @@ require 'yaml'
 module CppSamples
   DEFAULT_SAMPLES_DIR = 'samples'
   COMMENT_REGEX = /^\/\/\s*(.+)?$/
+  SPECS = ['c++98', 'c++03', 'c++11', 'c++14', 'c++17', 'experimental']
+
+  def self.sort_specs(specs)
+    specs.sort {|spec1, spec2| SPECS.find_index(spec1) <=> SPECS.find_index(spec2)}
+  end
 
   class SamplesGenerator < Jekyll::Generator
     def generate(site)
@@ -19,7 +24,9 @@ module CppSamples
       samples_tree.each do |category, sections|
         sections.each do |section, samples|
           samples.each do |sample|
-            site.pages << SamplePage.new(site, sample)
+            sample.variations.keys.each do |spec|
+              site.pages << SamplePage.new(site, sample, spec)
+            end
           end
         end
       end
@@ -136,18 +143,28 @@ module CppSamples
   end
 
   class SamplePage < Jekyll::Page
-    def initialize(site, sample)
+    def initialize(site, sample, spec)
       @site = site
       @base = site.source
-      @dir = File.dirname(sample.path)
-      @name = "#{File.basename(sample.path)}.html"
+      @dir = "samples/#{File.dirname(sample.name)}"
+
+      is_primary = spec == sample.primary_spec
+
+      if is_primary
+        @name = "#{File.basename(sample.name)}.html"
+      else
+        @name = "#{File.basename(sample.name)}.#{spec}.html"
+      end
 
       process(@name)
       read_yaml(File.join(@base, '_includes', ''), 'sample.html')
 
+      variation = sample.variations[spec]
+
       self.data['sample'] = sample
-      self.data['title'] = sample.title
-      self.data['description'] = sample.intent
+      self.data['spec'] = spec
+      self.data['title'] = variation.title
+      self.data['description'] = variation.intent
     end
   end
 
@@ -164,15 +181,69 @@ module CppSamples
   end
 
   class Sample
-    attr_accessor :file_name, :path, :code_offset, :title, :intent
+    attr_accessor :name, :variations
 
-    def initialize(sample_file_name, user_cache, contributors_list)
+    def initialize(samples_dir, sample_name, user_cache, contributors_list)
+      @name = sample_name
       @user_cache = user_cache
 
-      sample_file = File.new(sample_file_name, 'r')
+      @variations = {}
 
-      @file_name = get_file_name(sample_file_name)
-      @path = file_name_to_path(sample_file_name)
+      sample_paths = Dir.glob("#{samples_dir}/#{sample_name}*.cpp")
+      sample_paths.each do |sample_path|
+        spec_match = /^.+\.(?<spec>.+)\.cpp$/.match(sample_path)
+        has_spec = !spec_match.nil?
+
+        variation = Variation.new(sample_path, user_cache, contributors_list)
+
+        spec = if has_spec
+          spec_match['spec']
+        else
+          variation.tags[0] || 'c++98'
+        end
+
+        @variations[spec] = variation
+      end
+    end
+
+    def primary
+      @variations[primary_spec]
+    end
+
+    def min_spec
+      CppSamples::sort_specs(@variations.keys).first
+    end
+
+    def primary_spec
+      specs = CppSamples::sort_specs(@variations.keys)
+      i = specs.rindex { |spec| spec.start_with?('c++') }
+      specs[i] if i else specs.last
+    end
+
+    def to_liquid
+      {
+        'name' => @name,
+        'primary' => primary.to_liquid,
+        'min_spec' => min_spec,
+        'primary_spec' => primary_spec,
+        'variations' => @variations.each_with_object({}) do |(spec, variation), variations|
+          variations[spec] = variation.to_liquid
+          variations
+        end
+      }
+    end
+  end
+
+  class Variation
+    attr_accessor :file_name, :path, :code, :code_offset, :title, :intent, :tags, :description
+
+    def initialize(sample_path, user_cache, contributors_list)
+      @user_cache = user_cache
+
+      sample_file = File.new(sample_path, 'r')
+
+      @file_name = get_file_name(sample_path)
+      @path = file_name_to_path(sample_path)
 
       sample_contents = strip_blank_lines(sample_file.readlines)
 
@@ -189,8 +260,8 @@ module CppSamples
       @code = code_lines.join
       @code_offset = sample_contents.index(code_lines[0])
 
-      @contributors = get_contributors(sample_file_name, contributors_list)
-      @modified_date = get_modified_date(sample_file_name)
+      @contributors = get_contributors(sample_path, contributors_list)
+      @modified_date = get_modified_date(sample_path)
     end
 
     def to_liquid
@@ -275,7 +346,7 @@ module CppSamples
     end
 
     private def get_contributors(file_name, contributors_list)
-      real_path = file_name.split('/')[-3..-1].join('/')
+      real_path = file_name.split('/')[1..-1].join('/')
 
       committers = nil
       Dir.chdir('samples') do
@@ -345,8 +416,7 @@ module CppSamples
     contents['categories'].each_with_object({}) do |category, tree|
       tree[Section.new(category['title'])] = category['sections'].each_with_object({}) do |section, tree_category|
         tree_category[Section.new(section['title'])] = section['samples'].map do |sample_path|
-          sample_file_name = "#{samples_dir}/#{sample_path}.cpp"
-          Sample.new(sample_file_name, user_cache, contributors_list)
+          Sample.new(samples_dir, sample_path, user_cache, contributors_list)
         end
         tree_category
       end

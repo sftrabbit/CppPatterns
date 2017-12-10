@@ -1,72 +1,72 @@
 <!doctype html>
 <html>
-	<head>
-		<title>{% if page.title %}{{ page.title }} - {% endif %}C++ Samples</title>
-		<meta charset="utf-8">
-		<meta name="description" content="{{ page.description }}">
-		<meta name="viewport" content="width=device-width,user-scalable=no">
-		<link rel="canonical" href="{{ site.baseurl }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}">
-		<link rel="icon" sizes="16x16" type="image/vnd.microsoft.icon" href="{{ site.baseurl }}/images/icon-16.ico">
-		<link rel="icon" sizes="32x32" type="image/vnd.microsoft.icon" href="{{ site.baseurl }}/images/icon-32.ico">
-		<link href="http://fonts.googleapis.com/css?family=Roboto:400italic,100,700italic,700,400|Roboto+Slab|Ubuntu+Mono" rel="stylesheet" type="text/css">
-		<link href="{{ site.baseurl }}/css/screen.css" rel="stylesheet" type="text/css">
+  <head>
+    <title>{% if page.title %}{{ page.title }} - {% endif %}C++ Patterns</title>
+    <meta charset="utf-8">
+    <meta name="description" content="{{ page.description }}">
+    <meta name="viewport" content="width=device-width,user-scalable=no">
+    <link rel="canonical" href="{{ site.baseurl }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}">
+    <link rel="icon" sizes="16x16" type="image/vnd.microsoft.icon" href="{{ site.baseurl }}/images/icon-16.ico">
+    <link rel="icon" sizes="32x32" type="image/vnd.microsoft.icon" href="{{ site.baseurl }}/images/icon-32.ico">
+    <link href="http://fonts.googleapis.com/css?family=Roboto:400italic,100,700italic,700,400|Roboto+Slab|Ubuntu+Mono" rel="stylesheet" type="text/css">
+    <link href="{{ site.baseurl }}/css/screen.css" rel="stylesheet" type="text/css">
 
-		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-		<script async defer src="https://apis.google.com/js/platform.js"></script>
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script async defer src="https://apis.google.com/js/platform.js"></script>
 
-		<meta name="twitter:card" content="summary">
-		<meta name="twitter:creator" content="@sftrabbit">
-		<meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}C++ Samples">
-		<meta property="og:site_name" content="C++ Samples">
-		<meta property="og:url" content="{{ site.baseurl }}{{ page.url }}">
-		<meta property="og:description" content="{{ page.description }}">
-		<meta property="fb:app_id" content="676162015844286">
-	</head>
-	<body>
-		<header>
-			<div class="container">
-				<div class="row">
-					<div class="column-1">
-						<h1><a href="{{ site.baseurl }}/"><span>C++</span>​Samples</a></h1>
-					</div>
-{% if page.url == '/index.html' %}
-					<div class="column-2 search">
-						<svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" fit="" style="pointer-events: none; display: block;"><g><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></g></svg>
-						<input id="search">
-					</div>
-					<div class="column-1 social flow-hide">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@sftrabbit">
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}C++ Patterns">
+    <meta property="og:site_name" content="C++ Patterns">
+    <meta property="og:url" content="{{ site.baseurl }}{{ page.url }}">
+    <meta property="og:description" content="{{ page.description }}">
+    <meta property="fb:app_id" content="676162015844286">
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="row">
+          <div class="column-1">
+            <h1><a href="{{ site.baseurl }}/"><span>C++</span>Patterns</a></h1>
+          </div>
+{% if page.name == 'index.html' %}
+          <div class="column-2 search">
+            <svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet" fit="" style="pointer-events: none; display: block;"><g><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></g></svg>
+            <input id="search">
+          </div>
+          <div class="column-1 social flow-hide">
 {% else %}
-					<div class="column-1 offset-2 social flow-hide">
+          <div class="column-1 offset-2 social flow-hide">
 {% endif %}
-						<a href="https://github.com/sftrabbit/CppSamples-Samples" title="Contribute on GitHub">
-							<svg viewBox="0 -50 1100 1100" preserveAspectRatio="xMidYMid meet" fit=""><path d="M512 0C229.252 0 0 229.25199999999995 0 512c0 226.251 146.688 418.126 350.155 485.813 25.593 4.686 34.937-11.125 34.937-24.626 0-12.188-0.469-52.562-0.718-95.314-128.708 23.46-161.707-31.541-172.469-60.373-5.525-14.809-30.407-60.249-52.398-72.263-17.988-9.828-43.26-33.237-0.917-33.735 40.434-0.476 69.348 37.308 78.471 52.75 45.938 77.749 119.876 55.627 148.999 42.5 4.654-32.999 17.902-55.627 32.501-68.373-113.657-12.939-233.22-56.875-233.22-253.063 0-55.94 19.968-101.561 52.658-137.404-5.22-12.999-22.844-65.095 5.063-135.563 0 0 42.937-13.749 140.811 52.501 40.811-11.406 84.594-17.031 128.124-17.22 43.499 0.188 87.314 5.874 128.188 17.28 97.689-66.311 140.686-52.501 140.686-52.501 28 70.532 10.375 122.564 5.124 135.499 32.811 35.844 52.626 81.468 52.626 137.404 0 196.686-119.751 240-233.813 252.686 18.439 15.876 34.748 47.001 34.748 94.748 0 68.437-0.686 123.627-0.686 140.501 0 13.625 9.312 29.561 35.25 24.562C877.436 929.998 1024 738.126 1024 512 1024 229.25199999999995 794.748 0 512 0z"></path></svg>
-						</a>
-						<a href="http://twitter.com/cppsamples" title="Follow @cppsamples on Twitter">
-							<svg viewBox="0 -19 175 175" preserveAspectRatio="xMidYMid meet" fit=""><g transform="translate(-282.32053,-396.30734)"><path d="m 453.82593,412.80619 c -6.3097,2.79897 -13.09189,4.68982 -20.20852,5.54049 7.26413,-4.35454 12.84406,-11.24992 15.47067,-19.46675 -6.79934,4.03295 -14.3293,6.96055 -22.34461,8.53841 -6.41775,-6.83879 -15.56243,-11.111 -25.68298,-11.111 -19.43159,0 -35.18696,15.75365 -35.18696,35.18525 0,2.75781 0.31128,5.44359 0.91155,8.01875 -29.24344,-1.46723 -55.16995,-15.47582 -72.52461,-36.76396 -3.02879,5.19662 -4.76443,11.24048 -4.76443,17.6891 0,12.20777 6.21194,22.97747 15.65332,29.28716 -5.76773,-0.18265 -11.19331,-1.76565 -15.93716,-4.40083 -0.004,0.14663 -0.004,0.29412 -0.004,0.44248 0,17.04767 12.12889,31.26806 28.22555,34.50266 -2.95247,0.80436 -6.06101,1.23398 -9.26989,1.23398 -2.2673,0 -4.47114,-0.22124 -6.62011,-0.63114 4.47801,13.97857 17.47214,24.15143 32.86992,24.43441 -12.04227,9.43796 -27.21366,15.06335 -43.69965,15.06335 -2.84014,0 -5.64082,-0.16722 -8.39349,-0.49223 15.57186,9.98421 34.06703,15.8094 53.93768,15.8094 64.72024,0 100.11301,-53.61524 100.11301,-100.11387 0,-1.52554 -0.0343,-3.04251 -0.10204,-4.55261 6.87394,-4.95995 12.83891,-11.15646 17.55618,-18.21305 z"></path></g></svg>
-						</a>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main class="container">
+            <a href="https://github.com/sftrabbit/CppPatterns-Patterns" title="Contribute on GitHub">
+              <svg viewBox="0 -50 1100 1100" preserveAspectRatio="xMidYMid meet" fit=""><path d="M512 0C229.252 0 0 229.25199999999995 0 512c0 226.251 146.688 418.126 350.155 485.813 25.593 4.686 34.937-11.125 34.937-24.626 0-12.188-0.469-52.562-0.718-95.314-128.708 23.46-161.707-31.541-172.469-60.373-5.525-14.809-30.407-60.249-52.398-72.263-17.988-9.828-43.26-33.237-0.917-33.735 40.434-0.476 69.348 37.308 78.471 52.75 45.938 77.749 119.876 55.627 148.999 42.5 4.654-32.999 17.902-55.627 32.501-68.373-113.657-12.939-233.22-56.875-233.22-253.063 0-55.94 19.968-101.561 52.658-137.404-5.22-12.999-22.844-65.095 5.063-135.563 0 0 42.937-13.749 140.811 52.501 40.811-11.406 84.594-17.031 128.124-17.22 43.499 0.188 87.314 5.874 128.188 17.28 97.689-66.311 140.686-52.501 140.686-52.501 28 70.532 10.375 122.564 5.124 135.499 32.811 35.844 52.626 81.468 52.626 137.404 0 196.686-119.751 240-233.813 252.686 18.439 15.876 34.748 47.001 34.748 94.748 0 68.437-0.686 123.627-0.686 140.501 0 13.625 9.312 29.561 35.25 24.562C877.436 929.998 1024 738.126 1024 512 1024 229.25199999999995 794.748 0 512 0z"></path></svg>
+            </a>
+            <a href="http://twitter.com/cppsamples" title="Follow @cppsamples on Twitter">
+              <svg viewBox="0 -19 175 175" preserveAspectRatio="xMidYMid meet" fit=""><g transform="translate(-282.32053,-396.30734)"><path d="m 453.82593,412.80619 c -6.3097,2.79897 -13.09189,4.68982 -20.20852,5.54049 7.26413,-4.35454 12.84406,-11.24992 15.47067,-19.46675 -6.79934,4.03295 -14.3293,6.96055 -22.34461,8.53841 -6.41775,-6.83879 -15.56243,-11.111 -25.68298,-11.111 -19.43159,0 -35.18696,15.75365 -35.18696,35.18525 0,2.75781 0.31128,5.44359 0.91155,8.01875 -29.24344,-1.46723 -55.16995,-15.47582 -72.52461,-36.76396 -3.02879,5.19662 -4.76443,11.24048 -4.76443,17.6891 0,12.20777 6.21194,22.97747 15.65332,29.28716 -5.76773,-0.18265 -11.19331,-1.76565 -15.93716,-4.40083 -0.004,0.14663 -0.004,0.29412 -0.004,0.44248 0,17.04767 12.12889,31.26806 28.22555,34.50266 -2.95247,0.80436 -6.06101,1.23398 -9.26989,1.23398 -2.2673,0 -4.47114,-0.22124 -6.62011,-0.63114 4.47801,13.97857 17.47214,24.15143 32.86992,24.43441 -12.04227,9.43796 -27.21366,15.06335 -43.69965,15.06335 -2.84014,0 -5.64082,-0.16722 -8.39349,-0.49223 15.57186,9.98421 34.06703,15.8094 53.93768,15.8094 64.72024,0 100.11301,-53.61524 100.11301,-100.11387 0,-1.52554 -0.0343,-3.04251 -0.10204,-4.55261 6.87394,-4.95995 12.83891,-11.15646 17.55618,-18.21305 z"></path></g></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="container">
 {{ content }}
-		</main>
-		<footer class="container">
-			<div class="row">
-				<div class="column-2">
-					<p>Feel like <b>contributing</b>? This website is generated from a git repository. If you have something to add or have noticed a mistake, please <a href="https://github.com/sftrabbit/CppSamples-Samples">fork the project on GitHub</a>.</p>
-					<p><div class="fb-like" data-href="{{ site.baseurl }}/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
-					<p><a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ site.baseurl }}/" data-text="Modern and idiomatic C++ code from C++ Samples" data-via="cppsamples" data-dnt="true">Tweet</a></p>
-					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-					<div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://www.cppsamples.com/"></div>
-				</div>
-				<div class="column-1 offset-1 about">
-					<img src="http://josephmansfield.uk/images/logo.svg">
-					<p>C++ Samples created by <a href="http://josephmansfield.uk/">Joseph Mansfield</a></p>
-				</div>
-			</div>
-		</footer>
-		<script>
+    </main>
+    <footer class="container">
+      <div class="row">
+        <div class="column-2">
+          <p>Feel like <b>contributing</b>? This website is generated from a git repository. If you have something to add or have noticed a mistake, please <a href="https://github.com/sftrabbit/CppPatterns-Patterns">fork the project on GitHub</a>.</p>
+          <p><div class="fb-like" data-href="{{ site.baseurl }}/" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
+          <p><a href="https://twitter.com/share" class="twitter-share-button" data-url="{{ site.baseurl }}/" data-text="Modern and idiomatic C++ code from C++ Patterns" data-via="cppsamples" data-dnt="true">Tweet</a></p>
+          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+          <div class="g-plus" data-action="share" data-annotation="bubble" data-href="http://www.cppsamples.com/"></div>
+        </div>
+        <div class="column-1 offset-1 about">
+          <img src="http://josephmansfield.uk/images/logo.svg">
+          <p>C++ Patterns created by <a href="http://josephmansfield.uk/">Joseph Mansfield</a></p>
+        </div>
+      </div>
+    </footer>
+    <script>
 adsbygoogle = window.adsbygoogle || [];
 adsbygoogle.push({});
 
@@ -93,6 +93,6 @@ window.fbAsyncInit = function() {
    js.src = "//connect.facebook.net/en_US/sdk.js";
    fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-		</script>
-	</body>
+    </script>
+  </body>
 </html>

@@ -1,6 +1,4 @@
 environment: production
-baseurl: http://www.cppsamples.com
+baseurl: https://www.cpppatterns.com
 highlighter: pygments
 exclude: ['README.md', 'LICENSE.txt', 'Gemfile', 'scripts', 'samples']
-gems:
-- jekyll-compass

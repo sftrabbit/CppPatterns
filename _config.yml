@@ -2,5 +2,3 @@ environment: development
 baseurl: 
 highlighter: pygments
 exclude: ['README.md', 'LICENSE.txt', 'Gemfile', 'scripts', 'samples']
-gems:
-- jekyll-compass

@@ -1,125 +1,139 @@
 ---
 layout: default
 ---
-			<script>
+      <script>
 var selected = false;
 
 function apply_to_lines(lineRefElement, callback) {
-	var lineNumStart = parseInt(lineRefElement.dataset.line);
-	var lineNumEnd = lineNumStart;
-	if (lineRefElement.dataset.lineEnd) {
-		var lineNumEnd = parseInt(lineRefElement.dataset.lineEnd);
-	}
-	for (var i = lineNumStart; i <= lineNumEnd; i++) {
-		var lineElement = document.getElementById('line'+i);
-		callback(lineElement);
-	}
+  var lineNumStart = parseInt(lineRefElement.dataset.line);
+  var lineNumEnd = lineNumStart;
+  if (lineRefElement.dataset.lineEnd) {
+    var lineNumEnd = parseInt(lineRefElement.dataset.lineEnd);
+  }
+  for (var i = lineNumStart; i <= lineNumEnd; i++) {
+    var lineElement = document.getElementById('line'+i);
+    callback(lineElement);
+  }
 }
 
 function clear_all() {
-	var i = 1;
-	var lineElement;
-	while (lineElement = document.getElementById('line'+i)) {
-		lineElement.style.backgroundColor = "transparent";
-		i++;
-	}
+  var i = 1;
+  var lineElement;
+  while (lineElement = document.getElementById('line'+i)) {
+    lineElement.style.backgroundColor = "transparent";
+    i++;
+  }
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-	document.onclick = function(event) {
-		clear_all();
-	}
+  document.onclick = function(event) {
+    clear_all();
+  }
 
-	var lineRefElements = document.getElementsByClassName('lineref');
-	for (var i = 0; i < lineRefElements.length; i++) {
-		lineRefElements[i].onclick = function(event) {
-			clear_all();
-			apply_to_lines(event.target, function(lineElement) {
-				lineElement.style.backgroundColor = "rgb(76, 69, 41)";
-			});
-			event.stopPropagation();
-		}
-		lineRefElements[i].onmouseover = function(event) {
-			apply_to_lines(event.target, function(lineElement) {
-				if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
-					lineElement.style.backgroundColor = "rgb(69, 69, 69)";
-				}
-			});
-			event.stopPropagation();
-		}
-		lineRefElements[i].onmouseout = function(event) {
-			apply_to_lines(event.target, function(lineElement) {
-				if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
-					lineElement.style.backgroundColor = "transparent";
-				}
-			});
-			event.stopPropagation();
-		}
-	}
+  var lineRefElements = document.getElementsByClassName('lineref');
+  for (var i = 0; i < lineRefElements.length; i++) {
+    lineRefElements[i].onclick = function(event) {
+      clear_all();
+      apply_to_lines(event.target, function(lineElement) {
+        lineElement.style.backgroundColor = "rgb(76, 69, 41)";
+      });
+      event.stopPropagation();
+    }
+    lineRefElements[i].onmouseover = function(event) {
+      apply_to_lines(event.target, function(lineElement) {
+        if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
+          lineElement.style.backgroundColor = "rgb(69, 69, 69)";
+        }
+      });
+      event.stopPropagation();
+    }
+    lineRefElements[i].onmouseout = function(event) {
+      apply_to_lines(event.target, function(lineElement) {
+        if (lineElement.style.backgroundColor != "rgb(76, 69, 41)") {
+          lineElement.style.backgroundColor = "transparent";
+        }
+      });
+      event.stopPropagation();
+    }
+  }
 }, false);
-			</script>
-			<section class="sample">
-				<div class="row">
-					<div class="column-4">
-						<a href="{{ site.baseurl }}/">← Samples</a>
-						<h1>{{ page.sample.title }}</h1>
-					</div>
-				</div>
-				<div class="row">
-					<div class="column-2">
-						{% codeblock cpp %}{{ page.sample.code }}{% endcodeblock %}
-						<p class="license">This sample is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication</a>.</p>
-					</div>
-					<div class="column-2">
-						<h2>Intent</h2>
-						{{ page.sample | sample_intent }}
-						<h2>Description</h2>
-{% if page.sample.tags.size > 0 %}
-						<ul class="tags">
-{% for tag in page.sample.tags %}
-							<li class="{{ tag }}"><a href="/#/search/{{ tag }}">{{ tag }}</a></li>
-{% endfor %}
-						</ul>
-{% endif %}
-						{{ page.sample | sample_description }}
-						<div class="subrow">
-							<div class="column-1">
-								<h2>Contributors</h2>
-								<ul class="contributors">
-{% for contributor in page.sample.contributors %}
-									<li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
-{% endfor %}
-								</ul>
-								<h2>Last Updated</h2>
-								<p>{{ page.sample.modified_date | date_to_long_string }}</p>
-								<h2>Source</h2>
-								<p><a href="https://github.com/sftrabbit/CppSamples-Samples/tree/master/{{ page.sample.file_name }}">Fork this sample on GitHub</a></p>
-							</div>
-							<div class="column-1">
-								<h2>Share</h2>
-								<p><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
-								<p><a href="https://twitter.com/share" class="twitter-share-button" data-via="cppsamples" data-dnt="true">Tweet</a></p>
-								<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-								<div class="g-plusone" data-size="medium"></div>
-							</div>
-						</div>
-					</div>
-				</div>
+      </script>
+{% assign variation = page.sample.variations[page.spec] %}
+      <section class="sample">
+        <div class="row">
+          <div class="column-4">
+            <a href="{{ site.baseurl }}/">← Patterns</a>
+            <h1>{{ variation.title }}</h1>
+          </div>
+        </div>
+        <div class="row variation {{ spec }}">
+          <div class="column-2">
+            {% codeblock cpp %}{{ variation.code }}{% endcodeblock %}
+            <p class="license">This pattern is licensed under the <a href="http://creativecommons.org/publicdomain/zero/1.0/">CC0 Public Domain Dedication</a>.</p>
+          </div>
+          <div class="column-2">
+            <div class="min-spec">
+              Requires
+              <span class="tag {{ page.spec }}"><a href="/#/search/{{ page.spec }}">{{ page.spec }}</a></span>
+              {% if page.spec != 'experimental' %}or newer{% endif %}.
+  {% if page.sample.variations.size > 1 %}
+              Other versions:
+              <ul class="specs">
+    {% for variation_pairs in page.sample.variations %}
+      {% assign spec = variation_pairs[0] %}
+      {% if spec != page.spec %}
+        {% if spec == page.sample.primary_spec %}
+                <li><a href="{{ site.baseurl }}/patterns/{{ page.sample.name }}.html">{{ spec }}</a></li>
+        {% else %}
+                <li><a href="{{ site.baseurl }}/patterns/{{ page.sample.name }}.{{ spec }}.html">{{ spec }}</a></li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+              </ul>
+  {% endif %}
+            </div>
+            <h2>Intent</h2>
+            {{ variation | sample_intent }}
+            <h2>Description</h2>
+            {{ variation | sample_description }}
+            <div class="subrow">
+              <div class="column-1">
+                <h2>Contributors</h2>
+                <ul class="contributors">
+  {% for contributor in variation.contributors %}
+                  <li><a title="{{ contributor.name }}" {% if contributor.url %}href="{{ contributor.url }}"{% endif %}><img src="{{ contributor.image }}" alt="{{ contributor.name }}"></a></li>
+  {% endfor %}
+                </ul>
+                <h2>Last Updated</h2>
+                <p>{{ variation.modified_date | date_to_long_string }}</p>
+                <h2>Source</h2>
+                <p><a href="https://github.com/sftrabbit/CppPatterns-Patterns/tree/master/{{ variation.file_name }}">Fork this pattern on GitHub</a></p>
+              </div>
+              <div class="column-1">
+                <h2>Share</h2>
+                <p><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></p>
+                <p><a href="https://twitter.com/share" class="twitter-share-button" data-via="cpppatterns" data-dnt="true">Tweet</a></p>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+                <div class="g-plusone" data-size="medium"></div>
+              </div>
+            </div>
+          </div>
+        </div>
 {% if site.environment == 'production' %}
-				<div class="row">
-					<div class="column-4">
-						<div id="disqus_thread"></div>
-						<script type="text/javascript">
+        <div class="row">
+          <div class="column-4">
+            <div id="disqus_thread"></div>
+            <script type="text/javascript">
 var disqus_shortname = 'cppsamples';
 
 (function() {
-	var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-	dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-	(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 })();
-						</script>
-						<ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
-					</div>
-				</div>
+            </script>
+            <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-6789411983750873" data-ad-slot="5581833133" data-ad-format="auto"></ins>
+          </div>
+        </div>
 {% endif %}
-			</section>
+      </section>

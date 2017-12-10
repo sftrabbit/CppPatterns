@@ -1,4 +1,4 @@
-git clone https://github.com/sftrabbit/CppSamples-BUILD.git build
+git clone https://github.com/sftrabbit/CppPatterns-BUILD.git build
 cd build
 
 git config user.name $GIT_NAME
@@ -6,10 +6,10 @@ git config user.email $GIT_EMAIL
 
 rm -r *
 cp -r ../_site/* .
-echo "www.cppsamples.com" > CNAME
+echo "cpppatterns.com" > CNAME
 
 git add -A
 timestamp="$(date +"%Y%m%d%H%M%S")"
 git commit -m "Build $timestamp"
 
-git push -q "https://${GH_TOKEN}@github.com/sftrabbit/CppSamples-BUILD.git" gh-pages
+git push -q "https://${GH_TOKEN}@github.com/sftrabbit/CppPatterns-BUILD.git" gh-pages

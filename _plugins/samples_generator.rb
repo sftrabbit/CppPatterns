@@ -47,7 +47,9 @@ module CppSamples
         return @cache[email]
       end
 
-      while true
+      attempts = 0
+
+      while attempts < 3
         search_uri = URI.parse("https://api.github.com/search/users?q=#{email}+in:email&per_page=1")
 
         if @github_token.nil? or @github_token.empty?
@@ -65,6 +67,8 @@ module CppSamples
         search_result = JSON.parse(search_response.body)
 
         break if search_result.has_key?('items')
+
+        attempts += 1
 
         rate_limit_reset_timestamp = search_response['X-RateLimit-Reset'].to_i
         while Time.now.to_i < rate_limit_reset_timestamp
@@ -92,7 +96,9 @@ module CppSamples
         return @usernames_cache[username]
       end
 
-      while true
+      attempts = 0
+
+      while attempts < 3
         user_uri = URI.parse("https://api.github.com/users/#{username}")
 
         if @github_token.nil? or @github_token.empty?
@@ -111,6 +117,8 @@ module CppSamples
 
         break if user_result.has_key?('login') or
                  user_result['message'] == "Not Found"
+
+        attempts += 1
 
         rate_limit_reset_timestamp = user_response['X-RateLimit-Reset'].to_i
         while Time.now.to_i < rate_limit_reset_timestamp

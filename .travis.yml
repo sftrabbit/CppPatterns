@@ -5,6 +5,6 @@ branches:
   only:
   - release
 env:
-  - secure: "hzsoLvfsveyRFbyykjIfDyLZzMLM72Ar6AOEUxRwhpxMBoXeX9Y9T0Cl9j3jwTN3FAmA8zuqpSIe42geFJIRjnYzKDLcpik3sM8Avc5kqJbYhwkBKfYJYzoQ/aYYbe0yAZ3/USOyPU9TbKH8jvQqkvCu9c/EQPvTSb/aXaLE6MA="
+  - secure: "OYmJyHKq/1aelmHw44WHUC0vGu4tlbCvUVm/JAykYYDUVrtGQdIdSppgxnntRW5ZT12TMcKNpv4ZUSSX4/RDnYveTK6WH0IorF3966YUY+Ko+e4jvW4/138lVU8nH5HzkfzFXdOACl2ltoxH4ZkGYzUaSWTsQmrp4bp/j4bnLBE="
 script: ./scripts/build
 after_success: ./scripts/deploy
